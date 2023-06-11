@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Template Selection</title>
+    <link rel="stylesheet" th:href="@{../static/css/styles.css}" />
+</head>
+<body>
+<h1>Choose a Template</h1>
+<div class="template-list">
+    <ul>
+        <li th:each="template : ${templates}">
+            <a th:href="@{/select-template(template=${template})}">
+                <img th:src="@{'../images/'+${template}}" th:alt="${template}"/>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

@@ -63,12 +63,18 @@
         </dependency>
 
         <!-- uncomment this if you are using h2 (in memory database) and comment out the dependency com.mysql above -->
-        <dependency>
+       <!-- <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency> -->
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -108,5 +114,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

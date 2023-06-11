@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Template</title>
+</head>
+<body>
+<h1>Edit Template</h1>
+<form action="/save-template" method="post">
+    <input type="hidden" name="template" th:value="${template}">
+    <label>Date:</label>
+    <input type="text" name="date"><br><br>
+    <label>Name:</label>
+    <input type="text" name="name"><br><br>
+    <label>Location:</label>
+    <input type="text" name="location"><br><br>
+    <label>Free Text:</label>
+    <input type="text" name="freeText"><br><br>
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>

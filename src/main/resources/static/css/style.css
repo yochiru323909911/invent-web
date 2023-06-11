@@ -1,0 +1,13 @@
+.template-list ul {
+    list-style: none;
+}
+
+.template-list li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.template-list img {
+    width: 200px;
+    height: 200px;
+}
