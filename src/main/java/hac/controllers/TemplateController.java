@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class TemplateController {
 
+    @GetMapping("/")
+    public String showHome() {
+        return "home";
+    }
+
     @GetMapping("/templates")
     public String showTemplates(Model model) {
         String[] templates = new String[12];
