@@ -26,13 +26,13 @@ public class TemplateController {
         return "templates";
     }
 
-    @GetMapping("/select-template/{template}")
+    @GetMapping("/edit-template/{template}")
     public String selectTemplate(@PathVariable("template") String template, Model model) {
-        model.addAttribute("template", template);
+        model.addAttribute("template", "../images/"+template);
         return "edit-template";
     }
 
-    @PostMapping("/save-template")
+    @PostMapping("/save-design")
     public String saveTemplate(
             @RequestParam("template") String template,
             @RequestParam("date") String date,
@@ -45,7 +45,10 @@ public class TemplateController {
         // You can access the values: template, date, name, location, freeText
         // and perform the necessary operations (e.g., save to a database, generate a new image with the added text, etc.)
         // You can return a success message or redirect to another page
-        return "template-saved";
+        System.out.println("Template: " + template);
+        System.out.println("Date: " + date);
+        System.out.println("Name: " + name);
+        return "save-design";
     }
 
 }

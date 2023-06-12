@@ -1,21 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:bootstrap="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Edit Template</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<h1>Edit Template</h1>
-<form action="/save-template" method="post">
-    <input type="hidden" name="template" th:value="${template}">
-    <label>Date:</label>
-    <input type="text" name="date"><br><br>
-    <label>Name:</label>
-    <input type="text" name="name"><br><br>
-    <label>Location:</label>
-    <input type="text" name="location"><br><br>
-    <label>Free Text:</label>
-    <input type="text" name="freeText"><br><br>
-    <input type="submit" value="Save">
+<form th:action="@{/save-design}" method="post">
+
+<div class="container">
+    <img class="image" th:src="@{${template}}" th:alt="Image">
+    <div class="text-overlay">
+        <div class="form-group">
+            <input type="text" class="form-control" name="date" placeholder="Date"><br><br>
+            <input type="text" class="form-control" name="name" placeholder="Name"><br><br>
+            <input type="text" class="form-control" name="location" placeholder="Location"><br><br>
+            <input type="text" class="form-control" name="freeText" placeholder="Free text"><br><br>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</div>
 </form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
