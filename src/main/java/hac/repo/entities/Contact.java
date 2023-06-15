@@ -12,6 +12,9 @@ public class Contact implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
+    private String owner;
+
     @NotEmpty(message = "Contact name is mandatory")
     private String contactName;
 
@@ -20,13 +23,44 @@ public class Contact implements Serializable {
     private String contactEmail;
 
 
-    public Contact(String contactName, String contactEmail) {
+    public Contact(String owner, String contactName, String contactEmail) {
+        this.owner=owner;
         this.contactName = contactName;
         this.contactEmail = contactEmail;
     }
     public Contact() {
     }
 
-    // getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
 }
 

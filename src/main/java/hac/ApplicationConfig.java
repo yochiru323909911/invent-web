@@ -18,11 +18,11 @@ public class ApplicationConfig  {
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder bCryptPasswordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("liat@gmail.com")
+        manager.createUser(User.withUsername("liat")
                 .password(bCryptPasswordEncoder.encode("1234"))
                 .roles("USER")
                 .build());
-        manager.createUser(User.withUsername("yochi@gmail.com")
+        manager.createUser(User.withUsername("yochi")
                 .password(bCryptPasswordEncoder.encode("5678"))
                 .roles("USER")
                 .build());
@@ -46,27 +46,28 @@ public class ApplicationConfig  {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults())
+                //.cors(withDefaults())
                 .csrf(withDefaults())
 
                 .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/css/**", "/", "/403", "/errorpage", "/simulateError").permitAll()
+                        .requestMatchers("/css/**", "/images/**", "/**").permitAll()
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasRole("USER")
+//                        .requestMatchers("/user/**").hasRole("USER")
 //                        .requestMatchers("/shared/**").hasAnyRole("USER", "ADMIN")
                 )
-                .formLogin((form) -> form
-                                .loginPage("/login")
+                .formLogin(withDefaults()
+                        //(form) -> form
+//                                .loginPage("/login")
 //                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/", true)
+//                                .defaultSuccessUrl("/", true)
 //                                .failureUrl("/")
-                                .permitAll()
+//                                .permitAll()
                 )
                 .logout((logout) -> logout.permitAll())
-                .exceptionHandling(
-                        (exceptionHandling) -> exceptionHandling
-                                .accessDeniedPage("/403")
-                )
+//                .exceptionHandling(
+//                        (exceptionHandling) -> exceptionHandling
+//                                .accessDeniedPage("/403")
+//                )
 
         ;
 
@@ -76,10 +77,10 @@ public class ApplicationConfig  {
 
 
     // instead of defining open path in the method above you can do it here:
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring().requestMatchers("/favicon.ico");
-//    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/favicon.ico");
+    }
 
 }
 

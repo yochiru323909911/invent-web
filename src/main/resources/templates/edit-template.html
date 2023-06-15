@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:bootstrap="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
 
     <style>
         body {
@@ -37,22 +37,23 @@
 </head>
 <body>
 <form th:action="@{/save-design}" method="post">
-
-<div class="container">
-    <img class="image" th:src="@{${template}}" th:alt="Image">
-    <div class="text-overlay">
-        <div class="form-group">
-            <input type="text" class="form-control" name="date" placeholder="Date"><br><br>
-            <input type="text" class="form-control" name="name" placeholder="Name"><br><br>
-            <input type="text" class="form-control" name="location" placeholder="Location"><br><br>
-            <input type="text" class="form-control" name="freeText" placeholder="Free text"><br><br>
-            <button type="submit" class="btn btn-primary">Save</button>
+    <div class="container">
+        <img class="image" th:src="@{${template}}" th:alt="Image">
+        <div class="text-overlay">
+            <div class="form-group">
+                <input type="text" class="form-control" name="date" placeholder="Date"><br><br>
+                <input type="text" class="form-control" name="name" placeholder="Name"><br><br>
+                <input type="text" class="form-control" name="location" placeholder="Location"><br><br>
+                <input type="text" class="form-control" name="freeText" placeholder="Free text"><br><br>
+                <input type="hidden" class="form-control" name="owner" th:value="none"><br><br>
+                <input type="hidden" class="form-control" name="template" th:value="${template}"><br><br>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
         </div>
     </div>
-</div>
 </form>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+
+<script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

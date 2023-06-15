@@ -1,19 +1,20 @@
 package hac.controllers;
 
 /**
- * יש לוגין, ואנחנוצריכות את השם של המשתמש(אימייל) כדי לדעת ללכת
-  האם צריך סשן רק בשביל לשמור את המזהה של המתשתמש
-  איך ואיפה שמים את הפרטים מהלוגין בטבלה של היוזר
- מה הסינטקס של לגשת לטבלה של היוזר לחפש יוזר נוכחי ולהכניס לותך הרשימה של העיצובים שלו עיצוב חדש
+ * להוסיף חיפוש
+ * העלאת תמונה לאדמין
+ * שמירת תמונות במסד נתונים
+ *
  */
 
-import hac.Beans.UserSession;
 import hac.repo.entities.Design;
-import hac.repo.entities.User;
+import hac.repo.entities.Image;
 import hac.repo.repositories.DesignRepository;
-import hac.repo.repositories.UserRepository;
+import hac.repo.repositories.ImageRepository;
+import hac.util.ImageProcessor;
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,19 +22,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-@RestController
+@Controller
 public class TemplateController {
     @Autowired
     private DesignRepository designRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private ImageRepository imageRepository;
 
     @Autowired
-    @Qualifier("sessionBeanUser")
-    private UserSession userSession;
+    private ImageProcessor imageProcessor;
+
+    @PostConstruct
+    public void initialize() {
+        imageProcessor.saveImageFileNamesToRepository();
+    }
 
     @GetMapping("/")
     public String showHome() {
@@ -42,14 +49,19 @@ public class TemplateController {
 
     @GetMapping("/templates")
     public String showTemplates(Model model) {
-        String[] templates = new String[12];
-        for (int i = 1; i <= 12; i++) {
-            templates[i-1] = i + ".jpg";
-            System.out.println(templates[i-1]);
+        List<Image> images = imageRepository.findAll();
+        List<String> templates = new ArrayList<>();
+
+        for (Image image : images) {
+            templates.add(image.getPath());
         }
+
         model.addAttribute("templates", templates);
         return "templates";
     }
+
+
+
 
     @GetMapping("/edit-template/{template}")
     public String selectTemplate(@PathVariable("template") String template, Model model) {
@@ -58,18 +70,7 @@ public class TemplateController {
     }
 
     @PostMapping("/save-design")
-    public String saveTemplate(
-            @RequestParam("template") String template,
-            @RequestParam("date") String date,
-            @RequestParam("name") String name,
-            @RequestParam("location") String location,
-            @RequestParam("freeText") String freeText,
-            Model model
-    ) {
-        // Logic to save the template with the provided data
-        // You can access the values: template, date, name, location, freeText
-        // and perform the necessary operations (e.g., save to a database, generate a new image with the added text, etc.)
-        // You can return a success message or redirect to another page
+    public String saveTemplate(@Valid Design design, Model model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -78,18 +79,11 @@ public class TemplateController {
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                UserDetails userDetails = (UserDetails) principal;
-
-                // Fetch the user from the database
-                Optional<User> optionalUser = userRepository.findByEmail(userDetails.getUsername());
-
-                if(optionalUser.isPresent()){
-                    User user = optionalUser.get();
-                    Design design = new Design(template,date,name,location,freeText);
-                    user.getDesigns().add(design);
+                design.setOwner(((UserDetails) principal).getUsername());
+                designRepository.save(design);
                 }
             }
-        }
+        model.addAttribute("design", design);  //??
 
         return "save-design";
     }

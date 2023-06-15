@@ -3,6 +3,7 @@ package hac.repo.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
@@ -12,20 +13,28 @@ import java.io.Serializable;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        private String dateText;
-        private String locationText;
-        private String nameText;
+        @NotNull
+        private String owner;
+        private String date;
+        private String location;
+        private String name;
         private String freeText;
-        private String templateImage;
-        public Design() {
+        private String template;
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public Design() {
         }
 
-        public Design(String dateText, String locationText, String nameText, String freeText, String templateImage) {
-            this.dateText = dateText;
-            this.locationText = locationText;
-            this.nameText = nameText;
+        public Design(String date, String name, String location, String freeText, String owner, String template) {
+           this.owner=owner;
+            this.date = date;
+            this.location = location;
+            this.name = name;
             this.freeText = freeText;
-            this.templateImage = templateImage;
+            this.template = template;
         }
 
     public Long getId() {
@@ -36,28 +45,32 @@ import java.io.Serializable;
         this.id = id;
     }
 
-    public String getDateText() {
-        return dateText;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
-    public void setDateText(String dateText) {
-        this.dateText = dateText;
+    public String getDate() {
+        return date;
     }
 
-    public String getLocationText() {
-        return locationText;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setLocationText(String locationText) {
-        this.locationText = locationText;
+    public String getLocation() {
+        return location;
     }
 
-    public String getNameText() {
-        return nameText;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public void setNameText(String nameText) {
-        this.nameText = nameText;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFreeText() {
@@ -68,12 +81,11 @@ import java.io.Serializable;
         this.freeText = freeText;
     }
 
-    public String getTemplateImage() {
-        return templateImage;
+    public String getTemplate() {
+        return template;
     }
 
-    public void setTemplateImage(String templateImage) {
-        this.templateImage = templateImage;
+    public void setTemplate(String template) {
+        this.template = template;
     }
-
 }
