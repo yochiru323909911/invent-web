@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.util.stream.Stream;
 
 @Component
 public class ImageProcessor {
@@ -23,16 +22,30 @@ public class ImageProcessor {
             // Get the absolute folder path
             Path absoluteFolderPath = Paths.get(IMAGES_FOLDER_PATH).toAbsolutePath();
 
-            // Iterate through each file in the folder
-            Files.walk(absoluteFolderPath)
+            // Iterate through each category folder
+            try (Stream<Path> categoryFolders = Files.walk(absoluteFolderPath, 1)) {
+                categoryFolders
+                        .filter(Files::isDirectory)
+                        .skip(1) // Skip the root folder itself
+                        .forEach(this::processCategoryFolder);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void processCategoryFolder(Path categoryFolder) {
+        String category = categoryFolder.getFileName().toString();
+
+        try (Stream<Path> imageFiles = Files.walk(categoryFolder, 1)) {
+            imageFiles
                     .filter(Files::isRegularFile)
                     .forEach(file -> {
                         // Extract only the file name (without the path)
                         String fileName = file.getFileName().toString();
 
                         // Create an Image entity and save it to the repository
-                        Image image = new Image();
-                        image.setPath(fileName);
+                        Image image = new Image(category+"/"+fileName, category);
                         imageRepository.save(image);
                     });
         } catch (IOException e) {

@@ -2,9 +2,10 @@ package hac.controllers;
 
 /**
  * להוסיף חיפוש
- * העלאת תמונה לאדמין
- * שמירת תמונות במסד נתונים
- *
+ * העלאת תמונה לאדמין*
+ * יוזר ואדמין
+ * לעצב דף בית
+ * דף של סייב דיזיין- לחלץ את העיצוב ולהראות אותו למשתמש
  */
 
 import hac.repo.entities.Design;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 @Controller
 public class TemplateController {
@@ -60,12 +62,21 @@ public class TemplateController {
         return "templates";
     }
 
+    @PostMapping("/search-templates")
+    public String searchTemplates(@RequestParam("search") String search, Model model) {
+        List<String> templates = imageRepository.findByCategory(search).stream()
+                .map(Image::getPath)
+                .collect(Collectors.toList());
+
+        model.addAttribute("templates", templates);
+        return "templates";
+    }
 
 
 
-    @GetMapping("/edit-template/{template}")
-    public String selectTemplate(@PathVariable("template") String template, Model model) {
-        model.addAttribute("template", "../images/"+template);
+    @PostMapping("/edit-template")
+    public String selectTemplate(@RequestParam("template") String template, Model model) {
+        model.addAttribute("template", template);
         return "edit-template";
     }
 

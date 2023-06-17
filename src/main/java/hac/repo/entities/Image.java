@@ -9,9 +9,9 @@ public class Image implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String path;
 
+    private String category;
     public Long getId() {
         return id;
     }
@@ -22,8 +22,9 @@ public class Image implements Serializable {
     public Image() {
     }
 
-    public Image(String path) {
+    public Image(String path, String category) {
         this.path = path;
+        this.category = category;
     }
     public String getPath() {
         return path;
@@ -33,4 +34,11 @@ public class Image implements Serializable {
         this.path = path;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

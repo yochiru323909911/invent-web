@@ -13,9 +13,12 @@
 <div class="container">
     <div class="row">
         <div class="card col-2 ms-3 g-3" th:each="template : ${templates}">
-            <a th:href="@{'/edit-template/'+${template}}">
-                <img th:src="@{'../images/'+${template}}" th:alt="${template}" class="card-img-top"/>
-            </a>
+            <form th:action="@{/edit-template}" method="post">
+                <input type="hidden" name="template" th:value="'../images/'+${template}" />
+                <button type="submit" class="btn btn-link">
+                    <img th:src="@{'../images/'+${template}}" th:alt="${template}" class="card-img-top" />
+                </button>
+            </form>
         </div>
     </div>
         </div>
