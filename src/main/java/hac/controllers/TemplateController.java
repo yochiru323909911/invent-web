@@ -1,7 +1,7 @@
 package hac.controllers;
 
 /**
- * להוסיף חיפוש
+ * בסייבד דיזיין להוסיף חיפוש
  * העלאת תמונה לאדמין*
  * יוזר ואדמין
  * לעצב דף בית
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 @Controller
@@ -74,13 +73,13 @@ public class TemplateController {
 
 
 
-    @PostMapping("/edit-template")
+    @PostMapping("/shared/edit-template")
     public String selectTemplate(@RequestParam("template") String template, Model model) {
         model.addAttribute("template", template);
         return "edit-template";
     }
 
-    @PostMapping("/save-design")
+    @PostMapping("/shared/save")
     public String saveTemplate(@Valid Design design, Model model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -94,9 +93,11 @@ public class TemplateController {
                 designRepository.save(design);
                 }
             }
+        System.out.println("design: ");
+        System.out.println(design);
         model.addAttribute("design", design);  //??
 
-        return "save-design";
+        return "save";
     }
 
 }

@@ -11,3 +11,24 @@
     width: 200px;
     height: 200px;
 }
+
+.container {
+    position: relative;
+}
+
+.image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+
+    font-size: 24px;
+    text-align: center;
+}

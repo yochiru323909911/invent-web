@@ -46,28 +46,28 @@ public class ApplicationConfig  {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                //.cors(withDefaults())
+              //  .cors(withDefaults())
                 .csrf(withDefaults())
 
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/css/**", "/images/**", "/**").permitAll()
+                                .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/templates", "search-templates", "/403").permitAll()
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .requestMatchers("/user/**").hasRole("USER")
-//                        .requestMatchers("/shared/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/shared/**").hasAnyRole("USER", "ADMIN")
                 )
-                .formLogin(withDefaults()
-                        //(form) -> form
-//                                .loginPage("/login")
-//                                .loginProcessingUrl("/login")
-//                                .defaultSuccessUrl("/", true)
-//                                .failureUrl("/")
-//                                .permitAll()
+                .formLogin((form) -> form
+                        // .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        // .defaultSuccessUrl("/", true)
+                        // .failureUrl("/")
+                        .permitAll()
                 )
+
                 .logout((logout) -> logout.permitAll())
-//                .exceptionHandling(
-//                        (exceptionHandling) -> exceptionHandling
-//                                .accessDeniedPage("/403")
-//                )
+                .exceptionHandling(
+                        (exceptionHandling) -> exceptionHandling
+                                .accessDeniedPage("/403")
+                )
 
         ;
 
@@ -83,4 +83,3 @@ public class ApplicationConfig  {
     }
 
 }
-

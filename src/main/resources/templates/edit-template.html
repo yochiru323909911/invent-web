@@ -2,41 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:bootstrap="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/body.css}">
 
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            position: relative;
-        }
-
-        .image {
-            display: block;
-            max-width: 100%;
-            height: auto;
-        }
-
-        .text-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-
-            font-size: 24px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
-<form th:action="@{/save-design}" method="post">
+<form th:action="@{/shared/save}" method="post">
     <div class="container">
         <img class="image" th:src="@{${template}}" th:alt="Image">
         <div class="text-overlay">

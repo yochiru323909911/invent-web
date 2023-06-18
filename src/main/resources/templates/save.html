@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/body.css}">
+
+    <title>Template Saved</title>
+</head>
+<body>
+<h1>Template Saved</h1>
+<p>Your template has been saved successfully.</p>
+
+<div class="container" th:object="${design}">
+    <img class="image" th:src="@{*{template}}" th:alt="*{template}">
+    <div class="text-overlay">
+        <div th:text="*{date}" name="date"><br><br></div>
+        <div th:text="*{name}" name="name"><br><br></div>
+        <div th:text="*{location}" name="location"><br><br></div>
+        <div th:text="*{freeText}" name="freeText"><br><br></div>
+    </div>
+</div>
+
+<a th:href="@{/templates}">Go back to choose another template</a>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

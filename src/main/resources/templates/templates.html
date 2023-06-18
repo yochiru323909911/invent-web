@@ -3,9 +3,8 @@
 <head>
     <title>Template Selection</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/carousel.css" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <h1>Choose a Template</h1>
@@ -13,7 +12,7 @@
 <div class="container">
     <div class="row">
         <div class="card col-2 ms-3 g-3" th:each="template : ${templates}">
-            <form th:action="@{/edit-template}" method="post">
+            <form th:action="@{/shared/edit-template}" method="post">
                 <input type="hidden" name="template" th:value="'../images/'+${template}" />
                 <button type="submit" class="btn btn-link">
                     <img th:src="@{'../images/'+${template}}" th:alt="${template}" class="card-img-top" />
