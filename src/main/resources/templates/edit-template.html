@@ -5,27 +5,72 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/body.css}">
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
 
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .text-input {
+            display: block;
+            width: 100%;
+            resize: vertical;
+            border: none;
+            padding: 5px;
+            font-size: 18px;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-save {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <form th:action="@{/shared/save}" method="post">
     <div class="container">
-        <img class="image" th:src="@{${template}}" th:alt="Image">
-        <div class="text-overlay">
-            <div class="form-group">
-                <input type="text" class="form-control" name="date" placeholder="Date"><br><br>
-                <input type="text" class="form-control" name="name" placeholder="Name"><br><br>
-                <input type="text" class="form-control" name="location" placeholder="Location"><br><br>
-                <input type="text" class="form-control" name="freeText" placeholder="Free text"><br><br>
-                <input type="hidden" class="form-control" name="owner" th:value="none"><br><br>
-                <input type="hidden" class="form-control" name="template" th:value="${template}"><br><br>
-                <button type="submit" class="btn btn-primary">Save</button>
+        <div class="row">
+            <div class="col-10">
+        <div class="image-container">
+            <img class="image" th:src="@{${template}}" th:alt="Image">
+            <div class="text-overlay">
+                <textarea class="text-input" rows="5" placeholder="Enter text here"></textarea>
             </div>
+        </div>
+            </div>
+            <div class="col-2">
+        <div>
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown link
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+
+        </div>
+        </div>
         </div>
     </div>
 </form>
 
 <script th:src="@{/js/bootstrap.min.js}"></script>
-
 </body>
 </html>

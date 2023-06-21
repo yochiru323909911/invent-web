@@ -1,33 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
+<!--    <style>-->
+<!--        .custom-bg {-->
+<!--            background-color: #ffffcc;-->
+<!--        }-->
+<!--    </style>-->
 </head>
-<body>
-<!--style="background-color: #a654fe"-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
-            <a class="nav-link" th:href="@{/shared/contacts}">Contacts</a>
-            <a class="nav-link" th:href="@{/login}">Login</a>
-            <a class="nav-link" th:href="@{/shared/saved-designs}">Saved designs</a>
-            <a class="nav-link" th:href="@{/templates}">Templates</a>
-            <form class="d-flex ms-lg-auto" th:action="@{/search-templates}" method="post">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+
+<body th:style="'background-color: #ffffcc;'">
+<div th:replace="navbar.html :: header"></div>
+
+
+<div th:class="container">
+    <div class="row my-3" th:classappend="justify-content-end">
+        <div class="col" th:class="col-auto">
+        <button type="button" class="btn btn-info">
+            <a th:href="@{/logout}" style="text-decoration: none; color: inherit;">Logout</a></button>
         </div>
     </div>
-</nav>
+    <div class="row" th:classappend="align-items-center">
+        <div class="col-5" th:classappend="align-self-center">
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    <div th:each="template, iterStat : ${templates}" th:classappend="${iterStat.first ? 'carousel-item active' : 'carousel-item'}">
+                        <img th:src="@{'../images/'+${template}}" class="d-block w-70 img-fluid" alt="Image">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
 
+        </div>
+<!--        <div class="row" th:classappend="align-items-center">-->
+<!--            <div class="col-5" th:classappend="align-self-center">-->
+        <div class="col-4">
+            <h2> create your design!</h2>
+            <p> choose a template and start to create your invention!</p>
+        </div>
+        <div class="col-3" th:classappend="align-self-center">
+            <div class="row" th:classappend="align-items-center">
+                <button type="button" class="btn btn-info"><a th:href="@{/login}" style="text-decoration: none; color: inherit;">Login</a></button>
+            </div>
+            <div class="row my-3" th:classappend="align-items-center">
+                <button type="button" class="btn btn-info"><a th:href="@{/templates}" style="text-decoration: none; color: inherit;">Templates</a></button>
+            </div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')"> This content is only shown to administrators.
+                <div class="row my-3" th:classappend="align-items-center">
+                    <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+                        <label for="imageFileInput" class="btn btn-primary">Upload</label>
+                        <input type="file" name="imageFile" id="imageFileInput" accept="image/*" style="display: none;" />
+                        <button type="submit" style="display: none;">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+</div>
+</div>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 </body>
 </html>

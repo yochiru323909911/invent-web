@@ -26,10 +26,10 @@ public class ApplicationConfig  {
                 .password(bCryptPasswordEncoder.encode("5678"))
                 .roles("USER")
                 .build());
-//        manager.createUser(User.withUsername("admin")
-//                .password(bCryptPasswordEncoder.encode("password"))
-//                .roles("ADMIN")
-//                .build());
+        manager.createUser(User.withUsername("admin")
+                .password(bCryptPasswordEncoder.encode("password"))
+                .roles("ADMIN")
+                .build());
 //        manager.createUser(User.withUsername("useradmin")
 //                .password(bCryptPasswordEncoder.encode("password"))
 //                .roles("USER", "ADMIN")

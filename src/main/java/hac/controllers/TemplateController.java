@@ -44,7 +44,15 @@ public class TemplateController {
     }
 
     @GetMapping("/")
-    public String showHome() {
+    public String showHome(Model model) {
+        List<Image> images = imageRepository.findAll();
+        List<String> templates = new ArrayList<>();
+
+        for (Image image : images) {
+            templates.add(image.getPath());
+        }
+
+        model.addAttribute("templates", templates);
         return "home";
     }
 
@@ -95,7 +103,7 @@ public class TemplateController {
             }
         System.out.println("design: ");
         System.out.println(design);
-        model.addAttribute("design", design);  //??
+        model.addAttribute("design", design);
 
         return "save";
     }
