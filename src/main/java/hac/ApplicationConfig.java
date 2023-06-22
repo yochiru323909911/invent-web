@@ -50,8 +50,8 @@ public class ApplicationConfig  {
                 .csrf(withDefaults())
 
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/templates", "search-templates", "/403").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/templates", "search-templates", "/403", "/upload").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/shared/**").hasAnyRole("USER", "ADMIN")
                 )

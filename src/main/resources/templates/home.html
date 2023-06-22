@@ -57,10 +57,10 @@
             </div>
             <div sec:authorize="hasRole('ROLE_ADMIN')"> This content is only shown to administrators.
                 <div class="row my-3" th:classappend="align-items-center">
-                    <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/admin/upload}" method="post" enctype="multipart/form-data">
                         <label for="imageFileInput" class="btn btn-primary">Upload</label>
                         <input type="file" name="imageFile" id="imageFileInput" accept="image/*" style="display: none;" />
-                        <button type="submit" style="display: none;">Submit</button>
+                        <button type="submit" >Submit</button>
                     </form>
                 </div>
             </div>

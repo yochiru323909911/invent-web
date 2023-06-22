@@ -22,13 +22,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class TemplateController {
+
     @Autowired
     private DesignRepository designRepository;
 
@@ -101,11 +105,44 @@ public class TemplateController {
                 designRepository.save(design);
                 }
             }
-        System.out.println("design: ");
-        System.out.println(design);
         model.addAttribute("design", design);
 
         return "save";
+    }
+
+    @PostMapping("/admin/upload")
+    public String handleFileUpload(@RequestParam("imageFile") MultipartFile file, Model model) {
+        if (!file.isEmpty()) {
+            System.out.println("file is not empty");
+            try {
+                // Save the file to a permanent location
+                String filePath = "src/main/resources/static/images/party/" + file.getOriginalFilename();
+                System.out.println("filepath");
+                System.out.println(filePath);
+                file.transferTo(new File(filePath));
+
+                // Save the file path in the database
+                Image fileEntity = new Image(filePath, "party");
+                System.out.println("fileEntity");
+                System.out.println(fileEntity);
+                imageRepository.save(fileEntity);
+            } catch (IOException e) {
+                System.out.println("in exception");
+                e.printStackTrace();
+            }
+            //return home
+
+        }
+        //return file is empty
+//        List<Image> images = imageRepository.findAll();
+//        List<String> templates = new ArrayList<>();
+//
+//        for (Image image : images) {
+//            templates.add(image.getPath());
+//        }
+//
+//        model.addAttribute("templates", templates);
+        return "redirect:/login";
     }
 
 }
