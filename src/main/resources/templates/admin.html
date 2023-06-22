@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body th:style="'background-color: #ffffcc;'">
+<div th:replace="navbar.html :: header"></div>
+<div class="container">
+    <div class="row my-3" th:classappend="justify-content-end">
+        <div class="col" th:class="col-auto">
+            <button type="button" class="btn btn-info">
+                <a th:href="@{/logout}" style="text-decoration: none; color: inherit;">Logout</a></button>
+        </div>
+    </div>
+    <div class="row" th:classappend="align-items-center">
+        <div class="col-5" th:classappend="align-self-center">
+           <img src="/images/adminbg.jpg">
+        </div>
+        <div class="col-7" th:classappend="align-self-center">
+            <h1>Search by:</h1>
+            <div class="row">
+                <form class="d-flex ms-lg-auto" th:action="@{/search-admin}" method="post">
+                <div class="col-4">
+                    <button type="button" class="btn btn-outline-secondary" th:name="user">User</button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-outline-secondary" th:name="background">Background</button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-outline-secondary" th:name="date">Date</button>
+                </div>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+</div>
+</div>
+</div>
+</div>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>
+

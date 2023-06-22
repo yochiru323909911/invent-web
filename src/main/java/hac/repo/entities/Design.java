@@ -19,7 +19,7 @@ import java.io.Serializable;
         private String location;
         private String name;
         private String freeText;
-        private String template;
+        private String template;  //image table many to one
 
     public String getOwner() {
         return owner;
