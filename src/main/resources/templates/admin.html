@@ -15,27 +15,50 @@
                 <a th:href="@{/logout}" style="text-decoration: none; color: inherit;">Logout</a></button>
         </div>
     </div>
-    <div class="row" th:classappend="align-items-center">
+    <div class="row" th:classappend="align-items-start">
         <div class="col-5" th:classappend="align-self-center">
-           <img src="/images/adminbg.jpg">
+           <img class="d-block w-70 img-fluid" src="/images/adminbg.jpg">
         </div>
-        <div class="col-7" th:classappend="align-self-center">
+        <div class="col-7" >
             <h1>Search by:</h1>
+<!--            <div class="row">-->
+            <form th:action="@{/admin/search}" method="get">
+                <div th:class="row">
+                    <div class="col-md-3 col-12 mb-3">
+                        <select class="form-select" name="searchType">
+                            <option value="user">User</option>
+                            <option value="background">Background</option>
+                            <option value="date">Date</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 col-12 mb-3">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="searchTerm">
+                    </div>
+                    <div class="col-md-3 col-12 mb-3">
+                        <button class="btn btn-outline-success w-100" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
             <div class="row">
-                <form class="d-flex ms-lg-auto" th:action="@{/search-admin}" method="post">
-                <div class="col-4">
-                    <button type="button" class="btn btn-outline-secondary" th:name="user">User</button>
+            <div class="card col-5" style="width: 18rem;">
+                <img src="/images/user.JPG" class="card-img-top img-fluid" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">User statistics</h5>
+                    <p class="card-text">See who is the popular user.</p>
+                    <a href="#" class="btn btn-outline-success">Show</a>
                 </div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-outline-secondary" th:name="background">Background</button>
                 </div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-outline-secondary" th:name="date">Date</button>
+                <div class="card col-5" style="width: 18rem;">
+                    <img src="/images/user.JPG" class="card-img-top img-fluid" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Design statistics</h5>
+                    <p class="card-text">See what is the favorite design of the users.</p>
+                    <a href="#" class="btn btn-outline-success">Show</a>
                 </div>
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-</div>
+            </div>
+            </div>
+
+            <!--</div>-->
 </div>
 </div>
 </div>
