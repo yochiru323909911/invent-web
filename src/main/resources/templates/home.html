@@ -5,11 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-<!--    <style>-->
-<!--        .custom-bg {-->
-<!--            background-color: #ffffcc;-->
-<!--        }-->
-<!--    </style>-->
 </head>
 
 <body th:style="'background-color: #ffffcc;'">
@@ -48,19 +43,10 @@
         </div>
         <div class="col-3" th:classappend="align-self-center">
             <div class="row" th:classappend="align-items-center">
-                <button type="button" class="btn btn-info"><a th:href="@{/login}" style="text-decoration: none; color: inherit;">Login</a></button>
+                <a th:href="@{/login}" class="btn btn-info">Login</a>
             </div>
             <div class="row my-3" th:classappend="align-items-center">
-                <button type="button" class="btn btn-info"><a th:href="@{/templates}" style="text-decoration: none; color: inherit;">Templates</a></button>
-            </div>
-            <div sec:authorize="hasRole('ROLE_ADMIN')"> This content is only shown to administrators.
-                <div class="row my-3" th:classappend="align-items-center">
-                    <form th:action="@{/admin/upload}" method="post" enctype="multipart/form-data">
-                        <label for="imageFileInput" class="btn btn-primary">Upload</label>
-                        <input type="file" name="imageFile" id="imageFileInput" accept="image/*" style="display: none;" />
-                        <button type="submit" >Submit</button>
-                    </form>
-                </div>
+                <a th:href="@{/login}" class="btn btn-info">Templates</a>
             </div>
         </div>
 

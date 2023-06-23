@@ -20,7 +20,7 @@
            <img class="d-block w-70 img-fluid" src="/images/adminbg.jpg">
         </div>
         <div class="col-7" >
-            <h1>Search by:</h1>
+            <h1 class="fst-italic">Search by:</h1>
 <!--            <div class="row">-->
             <form th:action="@{/admin/search}" method="get">
                 <div th:class="row">
@@ -40,19 +40,19 @@
                 </div>
             </form>
             <div class="row">
-            <div class="card col-5" style="width: 18rem;">
+            <div class="card col-5 me-4" style="width: 18rem;">
                 <img src="/images/user.JPG" class="card-img-top img-fluid" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">User statistics</h5>
-                    <p class="card-text">See who is the popular user.</p>
+                    <p class="card-text fst-italic">See who is the popular user.</p>
                     <a href="#" class="btn btn-outline-success">Show</a>
                 </div>
-                </div>
+            </div>
                 <div class="card col-5" style="width: 18rem;">
-                    <img src="/images/user.JPG" class="card-img-top img-fluid" alt="...">
+                    <img src="/images/user.JPG" class="card-img-top img-fluid" alt="user image">
                 <div class="card-body">
                     <h5 class="card-title">Design statistics</h5>
-                    <p class="card-text">See what is the favorite design of the users.</p>
+                    <p class="card-text fst-italic">See what is the favorite design of the users.</p>
                     <a href="#" class="btn btn-outline-success">Show</a>
                 </div>
             </div>
