@@ -24,6 +24,6 @@ public class UserDesignCount {
     public void setDesignCount(Long designCount) {
         this.designCount = designCount;
     }
-// Getters and setters
+
 
 }

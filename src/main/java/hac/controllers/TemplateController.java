@@ -96,8 +96,8 @@ public class TemplateController {
     }
 
     @PostMapping("/shared/save")
-    public String saveTemplate(@Valid Design design, Model model) {
-
+    public String saveTemplate(@RequestParam("freeText") String freeText, @RequestParam("imgDesign") String imgDesign, Model model) {
+        Design design= new Design();
         System.out.println("in saveTemplate");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -106,7 +106,8 @@ public class TemplateController {
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                design.setOwner(((UserDetails) principal).getUsername());
+                List<Image> images = imageRepository.findByImagePath(imgDesign);
+                design = new Design(freeText, ((UserDetails) principal).getUsername(), images.get(0));
                 designRepository.save(design);
             }
         }

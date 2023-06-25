@@ -1,10 +1,14 @@
 package hac.repo.entities;
+import hac.repo.repositories.ImageRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.Serializable;
 
 @Entity
     public class Design implements Serializable {
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
@@ -30,13 +34,13 @@ import java.io.Serializable;
     }
 
     public Design() {
-        }
+    }
 
-        public Design(String freeText, String owner, Image imgDesign) {
-            this.freeText = freeText;
-            this.owner = owner;
-            this.imgDesign = imgDesign;
-        }
+    public Design(String freeText, String owner, Image imgDesign) {
+        this.freeText = freeText;
+        this.owner = owner;
+        this.imgDesign = imgDesign;
+    }
 
     public Long getId() {
         return id;

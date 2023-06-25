@@ -48,11 +48,11 @@
             <div class="col-10">
         <div class="image-container">
             <img class="image" th:src="@{${imgDesign}}" th:alt="Image">
-            <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
             <div class="text-overlay">
                 <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText"></textarea>
             </div>
-            <input type="hidden" name="owner" th:value="none" />
+            <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
+
             <button class="btn btn-primary btn-save" type="submit">Save</button>
         </div>
             </div>
