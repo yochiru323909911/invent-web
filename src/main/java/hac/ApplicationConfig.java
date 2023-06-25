@@ -50,7 +50,7 @@ public class ApplicationConfig  {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-              //  .cors(withDefaults())
+                .cors(withDefaults())
                 .csrf(withDefaults())
 
                 .authorizeHttpRequests((requests) -> requests

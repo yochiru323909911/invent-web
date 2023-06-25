@@ -13,9 +13,9 @@
     <div class="row">
         <div class="card col-2 ms-3 g-3" th:each="image : ${imgDesigns}">
             <form th:action="@{/shared/edit-template}" method="post">
-                <input type="hidden" name="imgDesignId" th:value="${image.getId()}" />
+                <input type="hidden" name="imgDesignId" th:value="${image}" />
                 <button type="submit" class="btn btn-link">
-                    <img th:src="@{${image.getPath()}}" th:alt="${image.getPath()}" class="card-img-top" />
+                    <img th:src="@{${image}}" th:alt="${image}" class="card-img-top" />
                 </button>
             </form>
         </div>

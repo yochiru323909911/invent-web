@@ -30,6 +30,10 @@ public class Image implements Serializable {
         this.category = category;
     }
 
+    public Image(String path) {
+        this.path = path;
+    }
+
     public String getPath() {
         return path;
     }

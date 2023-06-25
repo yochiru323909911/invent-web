@@ -40,13 +40,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -82,25 +77,28 @@ public class TemplateController {
     @GetMapping("/templates")
     public String showTemplates(Model model) {
         List<Image> images = imageRepository.findAll();
+        List<String> imgDesigns = new ArrayList<>();
 
-        model.addAttribute("imgDesigns", images);
+        for (Image image : images) {
+            imgDesigns.add(image.getPath());
+        }
+
+        model.addAttribute("imgDesigns", imgDesigns);
         return "templates";
     }
 
 
     @PostMapping("/shared/edit-template")
-    public String selectTemplate(@RequestParam("imgDesignId") Long imgDesignId, Model model) {
-        Optional<Image> optionalImgDesign = imageRepository.findById(imgDesignId);
-        if (optionalImgDesign.isPresent()) {
-            Image imgDesign = optionalImgDesign.get();
-            model.addAttribute("imgDesign", imgDesign);
-        }
+    public String selectTemplate(@RequestParam("imgDesignId") String imgPath, Model model) {
+
+        model.addAttribute("imgDesign", imgPath);
         return "edit-template";
     }
 
     @PostMapping("/shared/save")
     public String saveTemplate(@Valid Design design, Model model) {
 
+        System.out.println("in saveTemplate");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
@@ -119,14 +117,16 @@ public class TemplateController {
 
     @PostMapping("/search-templates")
     public String searchTemplates(@RequestParam("search") String search, Model model) {
-        List<Image> imgDesigns = imageRepository.findByCategory(search);
+        List<String> imgDesigns = imageRepository.findByCategory(search).stream()
+                .map(Image::getPath)
+                .collect(Collectors.toList());
 
         model.addAttribute("imgDesigns", imgDesigns);
         return "templates";
     }
 
     @PostMapping("/admin/upload")
-    public String handleFileUpload(@RequestParam("imageFile") MultipartFile file, Model model) {
+    public String handleFileUpload(@RequestParam("imageFile") MultipartFile file) {
         if (!file.isEmpty()) {
             System.out.println("file is not empty");
             try {
