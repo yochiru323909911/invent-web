@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 
 <body th:style="'background-color: #ffffcc;'">
@@ -22,8 +22,8 @@
         <div class="col-5" th:classappend="align-self-center">
             <div id="carouselExample" class="carousel slide">
                 <div class="carousel-inner">
-                    <div th:each="template, iterStat : ${templates}" th:classappend="${iterStat.first ? 'carousel-item active' : 'carousel-item'}">
-                        <img th:src="@{'../images/'+${template}}" class="d-block w-70 img-fluid" alt="Image">
+                    <div th:each="imgDesign, iterStat : ${imgDesigns}" th:classappend="${iterStat.first ? 'carousel-item active' : 'carousel-item'}">
+                        <img th:src="@{'../images/'+${imgDesign}}" class="d-block w-70 img-fluid" alt="Image">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -46,7 +46,7 @@
                 <a th:href="@{/login}" class="btn btn-info">Login</a>
             </div>
             <div class="row my-3" th:classappend="align-items-center">
-                <a th:href="@{/login}" class="btn btn-info">Templates</a>
+                <a th:href="@{/templates}" class="btn btn-info">Templates</a>
             </div>
         </div>
 

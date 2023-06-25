@@ -47,10 +47,13 @@
         <div class="row">
             <div class="col-10">
         <div class="image-container">
-            <img class="image" th:src="@{${template}}" th:alt="Image">
+            <img class="image" th:src="@{${imgDesign.getPath()}}" th:alt="Image">
+            <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
             <div class="text-overlay">
-                <textarea class="text-input" rows="5" placeholder="Enter text here"></textarea>
+                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText"></textarea>
             </div>
+            <input type="hidden" name="owner" th:value="none" />
+            <button class="btn btn-primary btn-save" type="submit">Save</button>
         </div>
             </div>
             <div class="col-2">

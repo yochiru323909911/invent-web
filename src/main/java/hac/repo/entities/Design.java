@@ -15,11 +15,19 @@ import java.io.Serializable;
 
         @NotNull
         private String owner;
-        private String date;
-        private String location;
-        private String name;
         private String freeText;
-        private String template;  //image table many to one
+
+        @ManyToOne
+        @JoinColumn(name = "img_design_id")
+        private Image imgDesign;
+
+    public Image getImgDesign() {
+        return imgDesign;
+    }
+
+    public void setImgDesign(Image imgDesign) {
+        this.imgDesign = imgDesign;
+    }
 
     public String getOwner() {
         return owner;
@@ -28,13 +36,10 @@ import java.io.Serializable;
     public Design() {
         }
 
-        public Design(String date, String name, String location, String freeText, String owner, String template) {
-           this.owner=owner;
-            this.date = date;
-            this.location = location;
-            this.name = name;
+        public Design(String freeText, String owner, Image imgDesign) {
             this.freeText = freeText;
-            this.template = template;
+            this.owner = owner;
+            this.imgDesign = imgDesign;
         }
 
     public Long getId() {
@@ -49,29 +54,6 @@ import java.io.Serializable;
         this.owner = owner;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getFreeText() {
         return freeText;
@@ -81,11 +63,12 @@ import java.io.Serializable;
         this.freeText = freeText;
     }
 
-    public String getTemplate() {
-        return template;
+    public Image getImg() {
+        return imgDesign;
     }
 
-    public void setTemplate(String template) {
-        this.template = template;
+    public void setImg(Image imgDesign) {
+        this.imgDesign = imgDesign;
     }
+
 }

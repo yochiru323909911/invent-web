@@ -3,13 +3,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 <div th:replace="navbar.html :: header"></div>
 <h1> results</h1>
-<div th:text="${searchType}"></div>
-<div th:text="${searchTerm}"></div>
+
+
+
 
 <script th:src="@{/js/bootstrap.min.js}"></script>
 

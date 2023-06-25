@@ -45,7 +45,7 @@ public class ImageProcessor {
                         String fileName = file.getFileName().toString();
 
                         // Create an Image entity and save it to the repository
-                        Image image = new Image(category+"/"+fileName, category);
+                        Image image = new Image("../images/"+category+"/"+fileName, category);
                         imageRepository.save(image);
                     });
         } catch (IOException e) {

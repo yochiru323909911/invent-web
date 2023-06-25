@@ -18,16 +18,20 @@ public class ApplicationConfig  {
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder bCryptPasswordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("liat")
-                .password(bCryptPasswordEncoder.encode("1234"))
+        manager.createUser(User.withUsername("user1")
+                .password(bCryptPasswordEncoder.encode("1111"))
                 .roles("USER")
                 .build());
-        manager.createUser(User.withUsername("yochi")
-                .password(bCryptPasswordEncoder.encode("5678"))
+        manager.createUser(User.withUsername("user2")
+                .password(bCryptPasswordEncoder.encode("2222"))
+                .roles("USER")
+                .build());
+        manager.createUser(User.withUsername("user3")
+                .password(bCryptPasswordEncoder.encode("3333"))
                 .roles("USER")
                 .build());
         manager.createUser(User.withUsername("admin")
-                .password(bCryptPasswordEncoder.encode("password"))
+                .password(bCryptPasswordEncoder.encode("0000"))
                 .roles("ADMIN")
                 .build());
 //        manager.createUser(User.withUsername("useradmin")

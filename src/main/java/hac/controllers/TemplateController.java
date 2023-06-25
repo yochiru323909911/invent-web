@@ -46,6 +46,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -68,43 +69,32 @@ public class TemplateController {
     @GetMapping("/")
     public String showHome(Model model) {
         List<Image> images = imageRepository.findAll();
-        List<String> templates = new ArrayList<>();
+        List<String> imgDesigns = new ArrayList<>();
 
         for (Image image : images) {
-            templates.add(image.getPath());
+            imgDesigns.add(image.getPath());
         }
 
-        model.addAttribute("templates", templates);
+        model.addAttribute("imgDesigns", imgDesigns);
         return "home";
     }
 
     @GetMapping("/templates")
     public String showTemplates(Model model) {
         List<Image> images = imageRepository.findAll();
-        List<String> templates = new ArrayList<>();
 
-        for (Image image : images) {
-            templates.add(image.getPath());
-        }
-
-        model.addAttribute("templates", templates);
-        return "templates";
-    }
-
-    @PostMapping("/search-templates")
-    public String searchTemplates(@RequestParam("search") String search, Model model) {
-        List<String> templates = imageRepository.findByCategory(search).stream()
-                .map(Image::getPath)
-                .collect(Collectors.toList());
-
-        model.addAttribute("templates", templates);
+        model.addAttribute("imgDesigns", images);
         return "templates";
     }
 
 
     @PostMapping("/shared/edit-template")
-    public String selectTemplate(@RequestParam("template") String template, Model model) {
-        model.addAttribute("template", template);
+    public String selectTemplate(@RequestParam("imgDesignId") Long imgDesignId, Model model) {
+        Optional<Image> optionalImgDesign = imageRepository.findById(imgDesignId);
+        if (optionalImgDesign.isPresent()) {
+            Image imgDesign = optionalImgDesign.get();
+            model.addAttribute("imgDesign", imgDesign);
+        }
         return "edit-template";
     }
 
@@ -125,6 +115,14 @@ public class TemplateController {
         model.addAttribute("design", design);
 
         return "save";
+    }
+
+    @PostMapping("/search-templates")
+    public String searchTemplates(@RequestParam("search") String search, Model model) {
+        List<Image> imgDesigns = imageRepository.findByCategory(search);
+
+        model.addAttribute("imgDesigns", imgDesigns);
+        return "templates";
     }
 
     @PostMapping("/admin/upload")

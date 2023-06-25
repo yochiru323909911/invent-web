@@ -3,6 +3,7 @@ package hac.repo.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 public class Image implements Serializable {
@@ -22,10 +23,13 @@ public class Image implements Serializable {
     public Image() {
     }
 
+
+
     public Image(String path, String category) {
         this.path = path;
         this.category = category;
     }
+
     public String getPath() {
         return path;
     }
@@ -41,4 +45,6 @@ public class Image implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
+
+
 }
