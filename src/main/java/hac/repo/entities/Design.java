@@ -1,10 +1,8 @@
 package hac.repo.entities;
-import hac.repo.repositories.ImageRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
     public class Design implements Serializable {
@@ -17,7 +15,10 @@ import java.io.Serializable;
         private String owner;
         private String freeText;
 
-        @ManyToOne
+        @Column(name = "creation_date")
+        private LocalDate creationDate;
+
+    @ManyToOne
         @JoinColumn(name = "img_design_id")
         private Image imgDesign;
 
@@ -40,6 +41,7 @@ import java.io.Serializable;
         this.freeText = freeText;
         this.owner = owner;
         this.imgDesign = imgDesign;
+        this.creationDate = LocalDate.now();
     }
 
     public Long getId() {
@@ -54,6 +56,13 @@ import java.io.Serializable;
         this.owner = owner;
     }
 
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
 
     public String getFreeText() {
         return freeText;
@@ -61,14 +70,6 @@ import java.io.Serializable;
 
     public void setFreeText(String freeText) {
         this.freeText = freeText;
-    }
-
-    public Image getImg() {
-        return imgDesign;
-    }
-
-    public void setImg(Image imgDesign) {
-        this.imgDesign = imgDesign;
     }
 
 }

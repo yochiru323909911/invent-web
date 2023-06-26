@@ -3,11 +3,7 @@ package hac.controllers;
 /**
  *!!!!!!!!!!!!!!!!!!!!!!! לשנות הגדרות ושמות של טבלאות של טבלאות
  *==באדמין:==
- * חיפוש לפי יוזר
- * חיפוש לפי באקרונד- שיציג את כל ההזמנות שעוצבו עם תמונה זו
- * להציג יוזר שיש לו הכי הרבה דיזיין
- *חיפוש הזמנה לפי תאריך
- * להוסיף באקרונד מועדף
+ * חיפוש הזמנה לפי תאריך
  *
  * --צריך להוסיף דף חשבון אישי--
  * שיש בו אפשרות למחוק ולערוך עיצובים קיימים
@@ -21,8 +17,10 @@ package hac.controllers;
  * גט ופוסט לכל דבר!! טיפול בארור
  */
 
+import hac.repo.entities.Contact;
 import hac.repo.entities.Design;
 import hac.repo.entities.Image;
+import hac.repo.repositories.ContactRepository;
 import hac.repo.repositories.DesignRepository;
 import hac.repo.repositories.ImageRepository;
 import hac.util.ImageProcessor;
@@ -55,6 +53,9 @@ public class TemplateController {
 
     @Autowired
     private ImageProcessor imageProcessor;
+
+    @Autowired
+    private ContactRepository contactRepository;
 
     @PostConstruct
     public void initialize() {
@@ -159,6 +160,24 @@ public class TemplateController {
 //
 //        model.addAttribute("templates", templates);
         return "redirect:/login";
+    }
+
+    @GetMapping("/shared/my-account")
+    public String showMyAccount(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
+            // User is authenticated
+            Object principal = auth.getPrincipal();
+
+            if (principal instanceof UserDetails) {
+                List<Contact> contacts = contactRepository.findByOwner(((UserDetails) principal).getUsername());
+                if(contacts.isEmpty())
+                    model.addAttribute("error", "No contacts found");
+                model.addAttribute("contacts", contacts);
+            }
+        }
+        return "my-account";
     }
 
 

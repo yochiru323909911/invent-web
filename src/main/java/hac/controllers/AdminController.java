@@ -2,17 +2,14 @@ package hac.controllers;
 
 import hac.repo.entities.Design;
 import hac.repo.repositories.DesignRepository;
-import hac.util.UserDesignCount;
+import hac.util.DesignCount;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,18 +33,25 @@ public class AdminController {
 
     @GetMapping("/admin/search")
     public String handleSearch(@RequestParam String searchType, @RequestParam String searchTerm, Model model) {
-        List<Design> designsResults= new ArrayList<>();
+        List<Design> designsResults;
+        try{
         switch (searchType) {
             case "user" -> designsResults = designRepository.findByUser(searchTerm);
-
-//            case "date":
-//                List<Design> designsResults = designRepository.findByDate(searchTerm);
-//                break;
+            case "date" -> designsResults = designRepository.findByDate(LocalDate.parse(searchTerm));
             case "background" -> designsResults = designRepository.findByBackground(searchTerm);
             default -> {
-                model.addAttribute("errors", "Invalid search term: " + searchTerm);
+                model.addAttribute("error", "Invalid search type: " + searchType);
                 return "admin";
             }
+        }
+            if(designsResults.isEmpty()){
+                model.addAttribute("error", "No results found");
+                return "admin";
+            }
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Invalid date input: required YYYY-MM-DD.");
+            return "admin";
         }
         model.addAttribute("designsResults", designsResults);
         return "results";
@@ -55,13 +59,24 @@ public class AdminController {
 
     @GetMapping("/admin/user-statistics")
     public String getUserStatistics(Model model) {
-        List<UserDesignCount> userDesignCounts = designRepository.findTop3UsersWithMostDesigns();
+        List<DesignCount> userDesignCounts = designRepository.findTop3UsersWithMostDesigns();
         if (userDesignCounts.isEmpty()) {
             model.addAttribute("error", "No users found");
             return "admin";
         }
         model.addAttribute("userDesignCounts", userDesignCounts);
         return "user-statistics";
+    }
+
+    @GetMapping("/admin/result-favorite-design")
+    public String getFavoriteDesign(Model model) {
+        List<DesignCount> favoriteDesign = designRepository.findTop3FavoriteDesigns();
+        if (favoriteDesign.isEmpty()) {
+            model.addAttribute("error", "No favorite design found");
+            return "admin";
+        }
+        model.addAttribute("favoriteDesigns", favoriteDesign);
+        return "result-favorite-design";
     }
 
 }

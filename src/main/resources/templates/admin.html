@@ -15,11 +15,11 @@
                 <a th:href="@{/logout}" style="text-decoration: none; color: inherit;">Logout</a></button>
         </div>
     </div>
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
+    <div th:if="${error}" class="alert alert-danger d-flex align-items-center" role="alert">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
             <use xlink:href="#exclamation-triangle-fill"/>
         </svg>
-        <div th:text="${error}"></div>
+        <div  th:text="${error}"></div>
     </div>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

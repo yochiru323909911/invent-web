@@ -7,8 +7,17 @@
 </head>
 <body>
 <div th:replace="navbar.html :: header"></div>
-<h1> results</h1>
-
+<h1> Search results</h1>
+<div class="container">
+    <div class="row" th:classappend="align-items-center">
+    <div class="card col-3 ms-2 g-3" th:classappend="align-self-center" th:each="design: ${designsResults}">
+            <img class="img-fluid" th:src="@{${design.getImgDesign().getPath()}}" th:alt="${design.getImgDesign().getPath()}">
+            <div class="text-overlay">
+                <div th:text="${design.getFreeText()}"></div>
+            </div>
+    </div>
+    </div>
+</div>
 
 
 
