@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:bootstrap="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .text-input {
+            display: block;
+            width: 100%;
+            resize: vertical;
+            border: none;
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        .btn-save {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navbar.html :: header"></div>
+<h1 class="d-flex justify-content-center">Template Saved</h1>
+<p class="d-flex justify-content-center">Your template has been saved successfully.</p>
+
+<div class="d-flex justify-content-center">
+    <div class="image-container" th:object="${design}">
+        <img class="image" th:src="@{*{imgDesign.getPath()}}" th:alt="*{imgDesign.getPath()}">
+        <div class="text-overlay">
+            <div class="text-input" th:style="'white-space: pre-line;'" th:text="${design.freeText}"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<a class="d-flex justify-content-center" th:href="@{/templates}">Go back to choose another template</a>
+
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

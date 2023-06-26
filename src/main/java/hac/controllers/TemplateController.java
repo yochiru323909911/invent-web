@@ -99,7 +99,6 @@ public class TemplateController {
     @PostMapping("/shared/save")
     public String saveTemplate(@RequestParam("freeText") String freeText, @RequestParam("imgDesign") String imgDesign, Model model) {
         Design design= new Design();
-        System.out.println("in saveTemplate");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
@@ -113,8 +112,7 @@ public class TemplateController {
             }
         }
         model.addAttribute("design", design);
-
-        return "save";
+        return "show-design";
     }
 
     @PostMapping("/search-templates")
@@ -127,7 +125,7 @@ public class TemplateController {
         return "templates";
     }
 
-    @PostMapping("/admin/upload")
+        @PostMapping("/admin/upload")
     public String handleFileUpload(@RequestParam("imageFile") MultipartFile file) {
         if (!file.isEmpty()) {
             System.out.println("file is not empty");
