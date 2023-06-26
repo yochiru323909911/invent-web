@@ -17,9 +17,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
-            <a class="nav-link" th:href="@{/shared/contacts}">Contacts</a>
             <a class="nav-link" th:href="@{/login}">Login</a>
-            <a class="nav-link" th:href="@{/shared/saved-designs}">Saved designs</a>
+            <a class="nav-link" th:href="@{/shared/my-account}">My Account</a>
             <a class="nav-link" th:href="@{/templates}">Templates</a>
             <form class="d-flex ms-lg-auto" th:action="@{/search-templates}" method="post">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">

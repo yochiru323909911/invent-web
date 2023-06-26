@@ -26,6 +26,7 @@ import hac.repo.repositories.ImageRepository;
 import hac.util.ImageProcessor;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -171,14 +172,63 @@ public class TemplateController {
             if (principal instanceof UserDetails) {
                 List<Contact> contacts = contactRepository.findByOwner(((UserDetails) principal).getUsername());
                 if(contacts.isEmpty())
-                    model.addAttribute("error", "No contacts found");
+                    model.addAttribute("errorContact", "No contacts found");
                 model.addAttribute("contacts", contacts);
+
+                List<Design> designs = designRepository.findByUser(((UserDetails) principal).getUsername());
+                if(designs.isEmpty())
+                    model.addAttribute("errorDesign", "No designs found");
+                model.addAttribute("designs", designs);
             }
         }
         return "my-account";
     }
 
+    @PostMapping("/shared/add-contact")
+    public String addUser(@RequestParam("contactName") String name, @RequestParam("emailContact") String email, Model model) {
+        String owner=SecurityContextHolder.getContext().getAuthentication().getName();
+        Contact newContact = new Contact(owner, name, email);
+        contactRepository.save(newContact);
 
+        update(model);
+        model.addAttribute("successContact", "Contact added successfully");
 
+        return "my-account";
+    }
 
+    @GetMapping("/shared/delete-contact/{id}")
+    public String deleteContact(@PathVariable("id") Long contactId, Model model) {
+        contactRepository.deleteById(contactId);
+        update(model);
+        model.addAttribute("successContact", "Contact deleted successfully");
+
+        return "my-account";
+    }
+
+    @GetMapping("/shared/delete-design/{id}")
+    public String deleteDesign(@PathVariable("id") Long designId, Model model) {
+        designRepository.deleteById(designId);
+        update(model);
+        model.addAttribute("successDesign", "Design deleted successfully");
+
+        return "my-account";
+    }
+
+    @GetMapping("/shared/edit-design/{id}")
+    public String editDesign(@PathVariable("id") Long designId, Model model) {
+        Design design = designRepository.findById(designId).get();
+
+        model.addAttribute("imgDesign", design.getImgDesign().getPath());
+        System.out.println(design.getImgDesign().getPath());
+        model.addAttribute("text", design.getFreeText());
+        return "edit-template";
+    }
+
+    public void update(Model model){
+        List<Contact> contacts = contactRepository.findByOwner(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Design> designs = designRepository.findByUser(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        model.addAttribute("contacts", contacts);
+        model.addAttribute("designs", designs);
+    }
 }

@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/body.css}">
 
     <style>
         .image-container {
@@ -41,19 +39,20 @@
         }
     </style>
 </head>
-<body>
+<body th:style="'background-color: #ffffcc;'">
+<div th:replace="navbar.html :: header"></div>
 <form th:action="@{/shared/save}" method="post">
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-10">
         <div class="image-container">
             <img class="image" th:src="@{${imgDesign}}" th:alt="Image">
             <div class="text-overlay">
-                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText"></textarea>
+                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText" th:value="${text}"></textarea>
             </div>
             <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
 
-            <button class="btn btn-primary btn-save" type="submit">Save</button>
+            <button class="btn btn-primary btn-save d-flex justify-content-center" type="submit">Save</button>
         </div>
             </div>
             <div class="col-2">
