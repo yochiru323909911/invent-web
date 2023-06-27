@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:bootstrap="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-
+<!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .image-container {
             position: relative;
@@ -46,34 +46,40 @@
         <div class="row d-flex justify-content-center">
             <div class="col-10">
         <div class="image-container">
+
             <img class="image" th:src="@{${imgDesign}}" th:alt="Image">
             <div class="text-overlay">
-                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText" th:value="${text}"></textarea>
+                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText" th:text="${text}"
+                          th:style="'font-family: ' + ${fontStyle}"></textarea>
             </div>
             <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
-
+            <input type="hidden" name="designId" th:value="${designId}">
             <button class="btn btn-primary btn-save d-flex justify-content-center" type="submit">Save</button>
         </div>
             </div>
             <div class="col-2">
         <div>
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown link
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-            </div>
 
+            <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Font
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <a th:href="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}"></a>
+                </div>
+            </div>
         </div>
         </div>
         </div>
     </div>
 </form>
 
-<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!--<script th:src="@{/js/bootstrap.min.js}"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

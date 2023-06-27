@@ -2,18 +2,13 @@ package hac.controllers;
 
 /**
  *!!!!!!!!!!!!!!!!!!!!!!! לשנות הגדרות ושמות של טבלאות של טבלאות
- *==באדמין:==
- * חיפוש הזמנה לפי תאריך
  *
  * --צריך להוסיף דף חשבון אישי--
- * שיש בו אפשרות למחוק ולערוך עיצובים קיימים
  * לערוך אנשי קשר
  *
  *
- * בסייבד דיזיין להוסיף חיפוש
  * העלאת תמונה לאדמין*
  * לעצב דף בית
- * דף של סייב דיזיין- לחלץ את העיצוב ולהראות אותו למשתמש
  * גט ופוסט לכל דבר!! טיפול בארור
  */
 
@@ -84,7 +79,8 @@ public class TemplateController {
         for (Image image : images) {
             imgDesigns.add(image.getPath());
         }
-
+        System.out.println("paths: ");
+        System.out.println(imgDesigns);
         model.addAttribute("imgDesigns", imgDesigns);
         return "templates";
     }
@@ -92,13 +88,18 @@ public class TemplateController {
 
     @PostMapping("/shared/edit-template")
     public String selectTemplate(@RequestParam("imgDesignId") String imgPath, Model model) {
-
         model.addAttribute("imgDesign", imgPath);
+        model.addAttribute("designId", -1);
+        List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
+        model.addAttribute("fonts", fonts);
+        model.addAttribute("fontStyle", "Arial");
+
         return "edit-template";
     }
 
     @PostMapping("/shared/save")
-    public String saveTemplate(@RequestParam("freeText") String freeText, @RequestParam("imgDesign") String imgDesign, Model model) {
+    public String saveTemplate(@RequestParam("freeText") String freeText, @RequestParam("imgDesign") String imgDesign,
+                               @RequestParam("designId") Long designId, Model model) {
         Design design= new Design();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -108,7 +109,12 @@ public class TemplateController {
 
             if (principal instanceof UserDetails) {
                 List<Image> images = imageRepository.findByImagePath(imgDesign);
-                design = new Design(freeText, ((UserDetails) principal).getUsername(), images.get(0));
+                if (designId != -1) {
+                    design = designRepository.findById(designId).get();
+                    design.setFreeText(freeText);
+                } else
+                    design = new Design(freeText, ((UserDetails) principal).getUsername(), images.get(0));
+
                 designRepository.save(design);
             }
         }
@@ -214,15 +220,25 @@ public class TemplateController {
         return "my-account";
     }
 
-    @GetMapping("/shared/edit-design/{id}")
-    public String editDesign(@PathVariable("id") Long designId, Model model) {
+    @GetMapping("/shared/edit-design")
+    public String editDesign(@RequestParam("designId") Long designId, Model model) {
         Design design = designRepository.findById(designId).get();
 
         model.addAttribute("imgDesign", design.getImgDesign().getPath());
-        System.out.println(design.getImgDesign().getPath());
         model.addAttribute("text", design.getFreeText());
+        model.addAttribute("designId", designId);
+        List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
+        model.addAttribute("fonts", fonts);
+        model.addAttribute("fontStyle", "Arial");
         return "edit-template";
     }
+
+    @GetMapping("/shared/style/{fontStyle}")
+    public String changeFont(@PathVariable("fontStyle") String fontStyle, Model model) {
+        model.addAttribute("fontStyle", fontStyle);
+        return "edit-template";
+    }
+
 
     public void update(Model model){
         List<Contact> contacts = contactRepository.findByOwner(SecurityContextHolder.getContext().getAuthentication().getName());
