@@ -21,7 +21,6 @@ import hac.repo.repositories.ImageRepository;
 import hac.util.ImageProcessor;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,13 +29,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -80,15 +77,14 @@ public class TemplateController {
         for (Image image : images) {
             imgDesigns.add(image.getPath());
         }
-        System.out.println("paths: ");
-        System.out.println(imgDesigns);
+
         model.addAttribute("imgDesigns", imgDesigns);
         return "templates";
     }
 
 
     @PostMapping("/shared/edit-template")
-    public String selectTemplate(@RequestParam("imgDesignId") String imgPath, Model model) {
+    public String selectTemplate(@RequestParam("imgPath") String imgPath, Model model) {
         model.addAttribute("imgDesign", imgPath);
         model.addAttribute("designId", -1);
         List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
@@ -99,15 +95,16 @@ public class TemplateController {
     }
 
     @PostMapping("/shared/save")
-    public String saveTemplate(@Valid Design design, @RequestParam("designId") Long id, Model model) {
+    public String saveTemplate(@Valid Design design, @RequestParam("designId") Long id,
+                               @RequestParam("imgDesign")String imgPath, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
-            // User is authenticated
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                List<Image> images = imageRepository.findByImagePath(design.getImgDesign().getPath());
+                design.setImgDesign(imageRepository.findByImagePath(imgPath).get(0));
+
                  if(id!=-1){
                      Design curDesign=designRepository.findById(id).get();
                      curDesign=design;
@@ -219,23 +216,34 @@ public class TemplateController {
     }
 
     @GetMapping("/shared/edit-design")
-    public String editDesign(@RequestParam("designId") Long designId, Model model) {
+    public String editDesign(@RequestParam("designId") Long designId, @RequestParam("imgDesign") String imgPath, Model model) {
         Design design = designRepository.findById(designId).get();
-
-        model.addAttribute("imgDesign", design.getImgDesign().getPath());
+        System.out.println("in edit design");
+        System.out.println(design);
+        model.addAttribute("imgDesign", imgPath);
         model.addAttribute("text", design.getFreeText());
         model.addAttribute("designId", designId);
         List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
         model.addAttribute("fonts", fonts);
-        model.addAttribute("fontStyle", design.getFontType());
+        model.addAttribute("fontStyle", design.getFontStyle());
         model.addAttribute("fontSize", design.getFontSize());
         model.addAttribute("fontColor", design.getFontColor());
         return "edit-template";
     }
 
     @GetMapping("/shared/style/{fontStyle}")
-    public String changeFont(@PathVariable("fontStyle") String fontStyle, Model model) {
-        model.addAttribute("fontStyle", fontStyle);
+    public String changeFont(@Valid Design design, Model model, @PathVariable String fontStyle,
+                             @RequestParam("designId") Long designId, @RequestParam("imgDesign") String imgPath) {
+       design.setFontStyle(fontStyle);
+        model.addAttribute("imgDesign", imgPath);
+        model.addAttribute("text", design.getFreeText());
+        model.addAttribute("designId", designId);
+        List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
+        model.addAttribute("fonts", fonts);
+        model.addAttribute("fontStyle", design.getFontStyle());
+        model.addAttribute("fontSize", design.getFontSize());
+        model.addAttribute("fontColor", design.getFontColor());
+
         return "edit-template";
     }
 

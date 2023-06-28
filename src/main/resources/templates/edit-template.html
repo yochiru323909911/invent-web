@@ -52,8 +52,10 @@
                 <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText" th:text="${text}"
                           th:style="'font-family: ' + ${fontStyle}"></textarea>
             </div>
+            <input type="hidden" name="owner" th:value="none"> <!-- This is the line that is causing the error -->
             <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
             <input type="hidden" name="designId" th:value="${designId}">
+            <input type="hidden" name="fontStyle" th:value="${fontStyle}">
             <input name="fontColor" th:value="${fontColor}">
             <input name="fontSize" th:value="${fontSize}">
             <button class="btn btn-primary btn-save d-flex justify-content-center" type="submit">Save</button>
@@ -70,7 +72,9 @@
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
 <!--                    <a th:action="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}"></a>-->
-                    <input type="submit" value="change font" th:formaction="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}">
+                    <input type="submit" value="change font" th:formaction="'/shared/style/'+${font}" th:each="font : ${fonts}" th:text="${font}">
+<!--                    <input type="submit" value="change font" th:each="font : ${fonts}" th:attr="formaction='/shared/style/'+${font}" th:text="${font}">-->
+
                 </div>
             </div>
         </div>

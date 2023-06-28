@@ -15,7 +15,7 @@ import java.time.LocalDate;
         private String owner;
         private String freeText;
 
-        private String fontType;
+        private String fontStyle;
 
         private String fontColor;
 
@@ -44,11 +44,11 @@ import java.time.LocalDate;
     public Design() {
     }
 
-    public Design(String freeText, String owner, Image imgDesign, String fontType, String fontColor, String fontSize) {
+    public Design(String freeText, String owner, String fontStyle, String fontColor, String fontSize) {
         this.freeText = freeText;
         this.owner = owner;
-        this.imgDesign = imgDesign;
-        this.fontType = fontType;
+        //  this.imgDesign = imgDesign;
+        this.fontStyle = fontStyle;
         this.fontColor = fontColor;
         this.fontSize = fontSize;
         this.creationDate = LocalDate.now();
@@ -58,7 +58,7 @@ import java.time.LocalDate;
         this.freeText = design.freeText;
         this.owner = design.owner;
         this.imgDesign = design.imgDesign;
-        this.fontType = design.fontType;
+        this.fontStyle = design.fontStyle;
         this.fontColor = design.fontColor;
         this.fontSize = design.fontSize;
         this.creationDate = LocalDate.now();
@@ -92,12 +92,12 @@ import java.time.LocalDate;
         this.freeText = freeText;
     }
 
-    public String getFontType() {
-        return fontType;
+    public String getFontStyle() {
+        return fontStyle;
     }
 
-    public void setFontType(String fontType) {
-        this.fontType = fontType;
+    public void setFontStyle(String fontStyle) {
+        this.fontStyle = fontStyle;
     }
 
     public String getFontColor() {
