@@ -13,6 +13,7 @@ import java.time.LocalDate;
 
         @NotNull
         private String owner;
+
         private String freeText;
 
         private String fontStyle;
@@ -44,10 +45,10 @@ import java.time.LocalDate;
     public Design() {
     }
 
-    public Design(String freeText, String owner, String fontStyle, String fontColor, String fontSize) {
+    public Design(String freeText, String owner, Image imgDesign, String fontStyle, String fontColor, String fontSize) {
         this.freeText = freeText;
         this.owner = owner;
-        //  this.imgDesign = imgDesign;
+        this.imgDesign = imgDesign;
         this.fontStyle = fontStyle;
         this.fontColor = fontColor;
         this.fontSize = fontSize;

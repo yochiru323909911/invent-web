@@ -11,9 +11,7 @@ public class Contact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String owner;
-
     @NotEmpty(message = "Contact name is mandatory")
     private String contactName;
 

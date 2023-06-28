@@ -95,22 +95,22 @@ public class TemplateController {
     }
 
     @PostMapping("/shared/save")
-    public String saveTemplate(@Valid Design design, @RequestParam("designId") Long id,
-                               @RequestParam("imgDesign")String imgPath, Model model) {
+    public String saveTemplate(@RequestParam String freeText, @RequestParam String fontSize, @RequestParam String fontColor, @RequestParam("designId") Long id,
+                               @RequestParam String fontStyle, @RequestParam("imgDesign")String imgPath, Model model) {
+        Design design= new Design();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                design.setImgDesign(imageRepository.findByImagePath(imgPath).get(0));
+                List<Image> images = imageRepository.findByImagePath(imgPath);
+                if (id != -1) {
+                    design = designRepository.findById(id).get();
+                    design.setFreeText(freeText);
+                } else
+                    design = new Design(freeText, ((UserDetails) principal).getUsername(), images.get(0), fontStyle, fontColor, fontSize);
 
-                 if(id!=-1){
-                     Design curDesign=designRepository.findById(id).get();
-                     curDesign=design;
-                     designRepository.save(curDesign);
-                 }
-                designRepository.save(design);
             }
         }
         model.addAttribute("design", design);
@@ -231,18 +231,17 @@ public class TemplateController {
         return "edit-template";
     }
 
-    @GetMapping("/shared/style/{fontStyle}")
-    public String changeFont(@Valid Design design, Model model, @PathVariable String fontStyle,
+    @PostMapping("/shared/style")
+    public String changeFont(@RequestParam String freeText, @RequestParam String fontSize, @RequestParam String fontColor, Model model, @RequestParam String fontStyle,
                              @RequestParam("designId") Long designId, @RequestParam("imgDesign") String imgPath) {
-       design.setFontStyle(fontStyle);
         model.addAttribute("imgDesign", imgPath);
-        model.addAttribute("text", design.getFreeText());
+        model.addAttribute("text", freeText);
         model.addAttribute("designId", designId);
         List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
         model.addAttribute("fonts", fonts);
-        model.addAttribute("fontStyle", design.getFontStyle());
-        model.addAttribute("fontSize", design.getFontSize());
-        model.addAttribute("fontColor", design.getFontColor());
+        model.addAttribute("fontStyle", fontStyle);
+        model.addAttribute("fontSize", fontSize);
+        model.addAttribute("fontColor", fontColor);
 
         return "edit-template";
     }

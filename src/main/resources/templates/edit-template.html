@@ -72,8 +72,7 @@
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
 <!--                    <a th:action="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}"></a>-->
-                    <input type="submit" value="change font" th:formaction="'/shared/style/'+${font}" th:each="font : ${fonts}" th:text="${font}">
-<!--                    <input type="submit" value="change font" th:each="font : ${fonts}" th:attr="formaction='/shared/style/'+${font}" th:text="${font}">-->
+                    <button type="submit" th:each="font : ${fonts}" th:text="${font}" th:formaction="'/shared/style'">change font</button><!--                    <input type="submit" value="change font" th:each="font : ${fonts}" th:attr="formaction='/shared/style/'+${font}" th:text="${font}">-->
 
                 </div>
             </div>
