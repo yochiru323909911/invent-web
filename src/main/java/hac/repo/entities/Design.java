@@ -15,6 +15,13 @@ import java.time.LocalDate;
         private String owner;
         private String freeText;
 
+        private String fontType;
+
+        private String fontColor;
+
+        private String fontSize;
+
+
         @Column(name = "creation_date")
         private LocalDate creationDate;
 
@@ -37,10 +44,23 @@ import java.time.LocalDate;
     public Design() {
     }
 
-    public Design(String freeText, String owner, Image imgDesign) {
+    public Design(String freeText, String owner, Image imgDesign, String fontType, String fontColor, String fontSize) {
         this.freeText = freeText;
         this.owner = owner;
         this.imgDesign = imgDesign;
+        this.fontType = fontType;
+        this.fontColor = fontColor;
+        this.fontSize = fontSize;
+        this.creationDate = LocalDate.now();
+    }
+
+    public Design(Design design) {
+        this.freeText = design.freeText;
+        this.owner = design.owner;
+        this.imgDesign = design.imgDesign;
+        this.fontType = design.fontType;
+        this.fontColor = design.fontColor;
+        this.fontSize = design.fontSize;
         this.creationDate = LocalDate.now();
     }
 
@@ -71,5 +91,30 @@ import java.time.LocalDate;
     public void setFreeText(String freeText) {
         this.freeText = freeText;
     }
+
+    public String getFontType() {
+        return fontType;
+    }
+
+    public void setFontType(String fontType) {
+        this.fontType = fontType;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public String getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(String fontSize) {
+        this.fontSize = fontSize;
+    }
+
 
 }

@@ -54,6 +54,8 @@
             </div>
             <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
             <input type="hidden" name="designId" th:value="${designId}">
+            <input name="fontColor" th:value="${fontColor}">
+            <input name="fontSize" th:value="${fontSize}">
             <button class="btn btn-primary btn-save d-flex justify-content-center" type="submit">Save</button>
         </div>
             </div>
@@ -67,7 +69,8 @@
             </p>
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
-                    <a th:href="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}"></a>
+<!--                    <a th:action="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}"></a>-->
+                    <input type="submit" value="change font" th:formaction="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}">
                 </div>
             </div>
         </div>

@@ -1,11 +1,11 @@
 package hac.controllers;
 
 /**
- *!!!!!!!!!!!!!!!!!!!!!!! לשנות הגדרות ושמות של טבלאות של טבלאות
+ *!!!!!!!!!!!!!!!!!!!!!!! לשנות ושמות של טבלאות
  *
  * --צריך להוסיף דף חשבון אישי--
  * לערוך אנשי קשר
- *
+ *לסדר את הקוד
  *
  * העלאת תמונה לאדמין*
  * לעצב דף בית
@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -98,9 +99,7 @@ public class TemplateController {
     }
 
     @PostMapping("/shared/save")
-    public String saveTemplate(@RequestParam("freeText") String freeText, @RequestParam("imgDesign") String imgDesign,
-                               @RequestParam("designId") Long designId, Model model) {
-        Design design= new Design();
+    public String saveTemplate(@Valid Design design, @RequestParam("designId") Long id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
@@ -108,13 +107,12 @@ public class TemplateController {
             Object principal = auth.getPrincipal();
 
             if (principal instanceof UserDetails) {
-                List<Image> images = imageRepository.findByImagePath(imgDesign);
-                if (designId != -1) {
-                    design = designRepository.findById(designId).get();
-                    design.setFreeText(freeText);
-                } else
-                    design = new Design(freeText, ((UserDetails) principal).getUsername(), images.get(0));
-
+                List<Image> images = imageRepository.findByImagePath(design.getImgDesign().getPath());
+                 if(id!=-1){
+                     Design curDesign=designRepository.findById(id).get();
+                     curDesign=design;
+                     designRepository.save(curDesign);
+                 }
                 designRepository.save(design);
             }
         }
@@ -229,7 +227,9 @@ public class TemplateController {
         model.addAttribute("designId", designId);
         List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
         model.addAttribute("fonts", fonts);
-        model.addAttribute("fontStyle", "Arial");
+        model.addAttribute("fontStyle", design.getFontType());
+        model.addAttribute("fontSize", design.getFontSize());
+        model.addAttribute("fontColor", design.getFontColor());
         return "edit-template";
     }
 
