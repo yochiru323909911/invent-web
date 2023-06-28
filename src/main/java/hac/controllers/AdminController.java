@@ -14,11 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/*
-לשאול איזה קבצים בידיוק צריך לבוטסראפ
-איך חוזרים לאותו דף מהלוגין
-
- */
 @Controller
 public class AdminController {
 
@@ -28,12 +23,12 @@ public class AdminController {
     @GetMapping("/admin")
     public String showAdmin() {
 
-        return "admin";
+        return "admin/admin";
     }
 
     @GetMapping("/admin/search")
     public String handleSearch(@RequestParam String searchType, @RequestParam String searchTerm, Model model) {
-        List<Design> designsResults;
+        List<Design> designsResults= new ArrayList<>();
         try{
         switch (searchType) {
             case "user" -> designsResults = designRepository.findByUser(searchTerm);
@@ -41,17 +36,17 @@ public class AdminController {
             case "background" -> designsResults = designRepository.findByBackground(searchTerm);
             default -> {
                 model.addAttribute("error", "Invalid search type: " + searchType);
-                return "admin";
+                return "admin/admin";
             }
         }
             if(designsResults.isEmpty()){
                 model.addAttribute("error", "No results found");
-                return "admin";
+                return "admin/admin";
             }
 
         } catch (Exception e) {
             model.addAttribute("error", "Invalid date input: required YYYY-MM-DD.");
-            return "admin";
+            return "admin/admin";
         }
         model.addAttribute("designsResults", designsResults);
         return "results";
@@ -62,10 +57,10 @@ public class AdminController {
         List<DesignCount> userDesignCounts = designRepository.findTop3UsersWithMostDesigns();
         if (userDesignCounts.isEmpty()) {
             model.addAttribute("error", "No users found");
-            return "admin";
+            return "admin/admin";
         }
         model.addAttribute("userDesignCounts", userDesignCounts);
-        return "user-statistics";
+        return "admin/user-statistics";
     }
 
     @GetMapping("/admin/result-favorite-design")
@@ -73,10 +68,10 @@ public class AdminController {
         List<DesignCount> favoriteDesign = designRepository.findTop3FavoriteDesigns();
         if (favoriteDesign.isEmpty()) {
             model.addAttribute("error", "No favorite design found");
-            return "admin";
+            return "admin/admin";
         }
         model.addAttribute("favoriteDesigns", favoriteDesign);
-        return "result-favorite-design";
+        return "admin/result-favorite-design";
     }
 
 }

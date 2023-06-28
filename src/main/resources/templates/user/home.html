@@ -19,17 +19,13 @@
             <a th:href="@{/logout}" style="text-decoration: none; color: inherit;">Logout</a></button>
         </div>
     </div>
-    <div class="row" th:classappend="align-items-center">
-        <div class="col-5" th:classappend="align-self-center">
-            <h1> Welcome to the Invitation Designer!</h1>
-            <h2>Create your own invitation by your style</h2>
-            <h3>Choose a template and start to create your invention!</h3>
-        </div>
-        <div class="col-4" th:classappend="align-self-center">
-            <img th:src="@{/images/homeImg.jpg}" class="d-block w-70 img-fluid" alt="Image">
-        </div>
+    <div class="row" >
+        <img th:src="@{/images/home2.png}" class="img-fluid" alt="Image">
     </div>
+    <br>
+    <br>
     <div class="row" th:classappend="align-items-center">
+        <div class="col-2" th:classappend="align-self-center"></div>
         <div class="col-4" th:classappend="align-self-center">
             <div id="carouselExample" class="carousel slide">
                 <div class="carousel-inner">
@@ -47,12 +43,23 @@
                 </button>
             </div>
             <div class="row my-3" th:classappend="align-items-center">
-                <a th:href="@{/templates}" class="btn btn-info">Templates</a>
+                <div class="col" th:class="col-auto" th:classappend="align-self-center">
+                <a th:href="@{/designs}" class="btn btn-outline-info">Choose a Design!</a>
+                </div>
             </div>
         </div>
-        <div class="col-3" th:classappend="align-self-center">
+        <div class="col-2" th:classappend="align-self-center"></div>
+        <div class="col-4" th:classappend="align-self-center">
             <div class="row" th:classappend="align-items-center">
-                <a th:href="@{/login}" class="btn btn-info">Login</a>
+                <div class="card border-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Login</div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Dont forget to login!</h5>
+                        <p class="card-text">Inorder to create and save designs you have to login.</p>
+                        <a th:href="@{/login}" class="btn btn-outline-info">Login</a>
+                    </div>
+                </div>
+
             </div>
 
         </div>

@@ -14,7 +14,7 @@
       <div class="card col-3 me-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="width: 18rem;">
         <img th:src="@{'/images/win'+${status.index+1}+'.JPG'}" class="card-img-top img-fluid" alt="...">
         <div class="card-body">
-          <h5 class="card-title" th:text="${user.getSearchTerm()()}"></h5>
+          <h5 class="card-title" th:text="${user.getSearchTerm()}"></h5>
          <p class="card-text fst-italic" th:text="${user.getDesignCount()} + ' designs created.'"></p>
         </div>
       </div>

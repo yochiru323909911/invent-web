@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Template Selection</title>
+    <title>Design Selection</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body th:style="'background-color: #c9ffff;'">
 <div th:replace="navbar.html :: header"></div>
-<h1>Choose a Template</h1>
+<h1>Choose a Design</h1>
 
 <div class="container">
     <div class="row">
         <div class="card col-2 ms-3 g-3" th:each="image : ${imgDesigns}">
-            <form th:action="@{/shared/edit-template}" method="post">
+            <form th:action="@{/shared/edit-invitation}" method="post">
                 <input type="hidden" name="imgPath" th:value="${image}" />
                 <button type="submit" class="btn btn-link">
                     <img th:src="@{${image}}" th:alt="${image}" class="card-img-top" />
@@ -28,13 +28,3 @@
 
 </body>
 </html>
-
-<!--<div class="template-list">-->
-<!--    <ul>-->
-<!--        <li th:each="template : ${templates}">-->
-<!--            <a th:href="@{/select-template(template=${template})}">-->
-<!--                <img th:src="@{'../images/'+${template}}" th:alt="${template}"/>-->
-<!--            </a>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--</div>-->

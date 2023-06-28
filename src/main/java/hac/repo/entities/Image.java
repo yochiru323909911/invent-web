@@ -1,6 +1,7 @@
 package hac.repo.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -10,8 +11,11 @@ public class Image implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String path;
 
+    @NotEmpty
     private String category;
     public Long getId() {
         return id;

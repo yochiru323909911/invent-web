@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -35,10 +34,10 @@
      </div>
   <div class="row">
     <div class="card col-5 me-4 ms-20 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-      <div th:replace="~{my-contacts.html :: my-contacts}"></div>
+      <div th:replace="~{user/my-contacts.html :: my-contacts}"></div>
       </div>
       <div class="card col-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-        <div th:replace="~{my-designs.html :: my-designs}"></div>
+        <div th:replace="~{user/my-designs.html :: my-designs}"></div>
     </div>
 </div>
   </div>

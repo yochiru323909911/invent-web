@@ -54,16 +54,13 @@ public class ApplicationConfig  {
                 .csrf(withDefaults())
 
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/templates", "search-templates", "/403", "/upload").permitAll()
+                                .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/designs", "search-templates", "/403", "/error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/shared/**").hasAnyRole("USER", "ADMIN")
                 )
                 .formLogin((form) -> form
-                        // .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        // .defaultSuccessUrl("/", true)
-                        // .failureUrl("/")
                         .permitAll()
                 )
 

@@ -49,33 +49,17 @@
 
             <img class="image" th:src="@{${imgDesign}}" th:alt="Image">
             <div class="text-overlay">
-                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText" th:text="${text}"
-                          th:style="'font-family: ' + ${fontStyle}"></textarea>
+                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText" th:text="${text}"></textarea>
             </div>
             <input type="hidden" name="owner" th:value="none"> <!-- This is the line that is causing the error -->
             <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->
             <input type="hidden" name="designId" th:value="${designId}">
-            <input type="hidden" name="fontStyle" th:value="${fontStyle}">
-            <input name="fontColor" th:value="${fontColor}">
-            <input name="fontSize" th:value="${fontSize}">
             <button class="btn btn-primary btn-save d-flex justify-content-center" type="submit">Save</button>
         </div>
             </div>
             <div class="col-2">
         <div>
 
-            <p>
-                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Font
-                </a>
-            </p>
-            <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-<!--                    <a th:action="@{/shared/style/{fontStyle}(fontStyle=${font})}" th:each="font : ${fonts}" th:text="${font}"></a>-->
-                    <button type="submit" th:each="font : ${fonts}" th:text="${font}" th:formaction="'/shared/style'">change font</button><!--                    <input type="submit" value="change font" th:each="font : ${fonts}" th:attr="formaction='/shared/style/'+${font}" th:text="${font}">-->
-
-                </div>
-            </div>
         </div>
         </div>
         </div>

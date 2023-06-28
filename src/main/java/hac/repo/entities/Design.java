@@ -7,28 +7,20 @@ import java.time.LocalDate;
 @Entity
     public class Design implements Serializable {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @NotNull
-        private String owner;
+    @NotNull
+    private String owner;
+    private String freeText;
 
-        private String freeText;
-
-        private String fontStyle;
-
-        private String fontColor;
-
-        private String fontSize;
-
-
-        @Column(name = "creation_date")
-        private LocalDate creationDate;
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
 
     @ManyToOne
-        @JoinColumn(name = "img_design_id")
-        private Image imgDesign;
+    @JoinColumn(name = "img_design_id")
+    private Image imgDesign;
 
     public Image getImgDesign() {
         return imgDesign;
@@ -45,13 +37,10 @@ import java.time.LocalDate;
     public Design() {
     }
 
-    public Design(String freeText, String owner, Image imgDesign, String fontStyle, String fontColor, String fontSize) {
+    public Design(String freeText, String owner, Image imgDesign) {
         this.freeText = freeText;
         this.owner = owner;
         this.imgDesign = imgDesign;
-        this.fontStyle = fontStyle;
-        this.fontColor = fontColor;
-        this.fontSize = fontSize;
         this.creationDate = LocalDate.now();
     }
 
@@ -59,9 +48,6 @@ import java.time.LocalDate;
         this.freeText = design.freeText;
         this.owner = design.owner;
         this.imgDesign = design.imgDesign;
-        this.fontStyle = design.fontStyle;
-        this.fontColor = design.fontColor;
-        this.fontSize = design.fontSize;
         this.creationDate = LocalDate.now();
     }
 
@@ -92,30 +78,5 @@ import java.time.LocalDate;
     public void setFreeText(String freeText) {
         this.freeText = freeText;
     }
-
-    public String getFontStyle() {
-        return fontStyle;
-    }
-
-    public void setFontStyle(String fontStyle) {
-        this.fontStyle = fontStyle;
-    }
-
-    public String getFontColor() {
-        return fontColor;
-    }
-
-    public void setFontColor(String fontColor) {
-        this.fontColor = fontColor;
-    }
-
-    public String getFontSize() {
-        return fontSize;
-    }
-
-    public void setFontSize(String fontSize) {
-        this.fontSize = fontSize;
-    }
-
 
 }

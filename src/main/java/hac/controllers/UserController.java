@@ -9,7 +9,6 @@ package hac.controllers;
  *
  * העלאת תמונה לאדמין*
  * לעצב דף בית
- * גט ופוסט לכל דבר!! טיפול בארור
  */
 
 import hac.repo.entities.Contact;
@@ -20,7 +19,6 @@ import hac.repo.repositories.DesignRepository;
 import hac.repo.repositories.ImageRepository;
 import hac.util.ImageProcessor;
 import jakarta.annotation.PostConstruct;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,16 +26,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class TemplateController {
+public class UserController {
 
     @Autowired
     private DesignRepository designRepository;
@@ -58,6 +53,7 @@ public class TemplateController {
 
     @GetMapping("/")
     public String showHome(Model model) {
+
         List<Image> images = imageRepository.findAll();
         List<String> imgDesigns = new ArrayList<>();
 
@@ -66,11 +62,18 @@ public class TemplateController {
         }
 
         model.addAttribute("imgDesigns", imgDesigns);
-        return "home";
+        return "user/home";
     }
 
-    @GetMapping("/templates")
-    public String showTemplates(Model model) {
+
+
+    @PostMapping("/designs")
+    public String postDesigns(){
+        return "error";
+    }
+
+    @GetMapping("/designs")
+    public String showDesigns(Model model) {
         List<Image> images = imageRepository.findAll();
         List<String> imgDesigns = new ArrayList<>();
 
@@ -79,24 +82,28 @@ public class TemplateController {
         }
 
         model.addAttribute("imgDesigns", imgDesigns);
-        return "templates";
+        return "designs";
     }
 
 
-    @PostMapping("/shared/edit-template")
-    public String selectTemplate(@RequestParam("imgPath") String imgPath, Model model) {
+    @GetMapping("/shared/edit-invitation")
+        public String postEditInvitation(){
+        return "error";
+    }
+    @PostMapping("/shared/edit-invitation")
+    public String selectInvitation(@RequestParam("imgPath") String imgPath, Model model) {
         model.addAttribute("imgDesign", imgPath);
         model.addAttribute("designId", -1);
-        List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
-        model.addAttribute("fonts", fonts);
-        model.addAttribute("fontStyle", "Arial");
 
-        return "edit-template";
+        return "user/edit-invitation";
     }
 
+    @GetMapping("/shared/save")
+    public String getSaveInvitation(){
+        return "error";
+    }
     @PostMapping("/shared/save")
-    public String saveTemplate(@RequestParam String freeText, @RequestParam String fontSize, @RequestParam String fontColor, @RequestParam("designId") Long id,
-                               @RequestParam String fontStyle, @RequestParam("imgDesign")String imgPath, Model model) {
+    public String saveInvitation(@RequestParam String freeText, @RequestParam("designId") Long id, @RequestParam("imgDesign")String imgPath, Model model) {
         Design design= new Design();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -109,59 +116,32 @@ public class TemplateController {
                     design = designRepository.findById(id).get();
                     design.setFreeText(freeText);
                 } else
-                    design = new Design(freeText, ((UserDetails) principal).getUsername(), images.get(0), fontStyle, fontColor, fontSize);
-
+                    design = new Design(freeText, ((UserDetails) principal).getUsername(), images.get(0));
+            designRepository.save(design);
             }
         }
         model.addAttribute("design", design);
-        return "show-design";
+        return "user/show-design";
     }
 
-    @PostMapping("/search-templates")
-    public String searchTemplates(@RequestParam("search") String search, Model model) {
+    @GetMapping("/search-designs")
+    public String getSearchDesigns(){
+        return "error";
+    }
+    @PostMapping("/search-designs")
+    public String searchDesigns(@RequestParam("search") String search, Model model) {
         List<String> imgDesigns = imageRepository.findByCategory(search).stream()
                 .map(Image::getPath)
                 .collect(Collectors.toList());
 
         model.addAttribute("imgDesigns", imgDesigns);
-        return "templates";
+        return "designs";
     }
 
-        @PostMapping("/admin/upload")
-    public String handleFileUpload(@RequestParam("imageFile") MultipartFile file) {
-        if (!file.isEmpty()) {
-            System.out.println("file is not empty");
-            try {
-                // Save the file to a permanent location
-                String filePath = "/images/party/" + file.getOriginalFilename();
-                System.out.println("filepath");
-                System.out.println(filePath);
-                file.transferTo(new File(filePath));
-
-                // Save the file path in the database
-                Image fileEntity = new Image(filePath, "party");
-                System.out.println("fileEntity");
-                System.out.println(fileEntity);
-                imageRepository.save(fileEntity);
-            } catch (IOException e) {
-                System.out.println("in exception");
-                e.printStackTrace();
-            }
-            //return home
-
-        }
-        //return file is empty
-//        List<Image> images = imageRepository.findAll();
-//        List<String> templates = new ArrayList<>();
-//
-//        for (Image image : images) {
-//            templates.add(image.getPath());
-//        }
-//
-//        model.addAttribute("templates", templates);
-        return "redirect:/login";
+    @PostMapping("/shared/my-account")
+    public String postMyAccount(){
+        return "error";
     }
-
     @GetMapping("/shared/my-account")
     public String showMyAccount(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -182,9 +162,13 @@ public class TemplateController {
                 model.addAttribute("designs", designs);
             }
         }
-        return "my-account";
+        return "user/my-account";
     }
 
+    @GetMapping("/shared/add-contact")
+    public String getAddContact(){
+        return "error";
+    }
     @PostMapping("/shared/add-contact")
     public String addUser(@RequestParam("contactName") String name, @RequestParam("emailContact") String email, Model model) {
         String owner=SecurityContextHolder.getContext().getAuthentication().getName();
@@ -194,56 +178,48 @@ public class TemplateController {
         update(model);
         model.addAttribute("successContact", "Contact added successfully");
 
-        return "my-account";
+        return "user/my-account";
     }
 
+    @PostMapping("/shared/delete-contact/{id}")
+    public String postDeleteContact(@PathVariable String id){
+        return "error";
+    }
     @GetMapping("/shared/delete-contact/{id}")
     public String deleteContact(@PathVariable("id") Long contactId, Model model) {
         contactRepository.deleteById(contactId);
         update(model);
         model.addAttribute("successContact", "Contact deleted successfully");
 
-        return "my-account";
+        return "user/my-account";
     }
 
+    @PostMapping("/shared/delete-design/{id}")
+    public String postDeleteDesign(@PathVariable String id){
+        return "error";
+    }
     @GetMapping("/shared/delete-design/{id}")
     public String deleteDesign(@PathVariable("id") Long designId, Model model) {
         designRepository.deleteById(designId);
         update(model);
         model.addAttribute("successDesign", "Design deleted successfully");
 
-        return "my-account";
+        return "user/my-account";
     }
 
     @GetMapping("/shared/edit-design")
-    public String editDesign(@RequestParam("designId") Long designId, @RequestParam("imgDesign") String imgPath, Model model) {
+    public String editDesign(@RequestParam("designId") Long designId, Model model) {
         Design design = designRepository.findById(designId).get();
-        System.out.println("in edit design");
-        System.out.println(design);
-        model.addAttribute("imgDesign", imgPath);
+        model.addAttribute("imgDesign", design.getImgDesign().getPath());
         model.addAttribute("text", design.getFreeText());
         model.addAttribute("designId", designId);
-        List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
-        model.addAttribute("fonts", fonts);
-        model.addAttribute("fontStyle", design.getFontStyle());
-        model.addAttribute("fontSize", design.getFontSize());
-        model.addAttribute("fontColor", design.getFontColor());
-        return "edit-template";
+
+        return "user/edit-invitation";
     }
 
-    @PostMapping("/shared/style")
-    public String changeFont(@RequestParam String freeText, @RequestParam String fontSize, @RequestParam String fontColor, Model model, @RequestParam String fontStyle,
-                             @RequestParam("designId") Long designId, @RequestParam("imgDesign") String imgPath) {
-        model.addAttribute("imgDesign", imgPath);
-        model.addAttribute("text", freeText);
-        model.addAttribute("designId", designId);
-        List<String> fonts = List.of("Arial", "Verdana", "Helvetica", "Times New Roman", "Courier New");
-        model.addAttribute("fonts", fonts);
-        model.addAttribute("fontStyle", fontStyle);
-        model.addAttribute("fontSize", fontSize);
-        model.addAttribute("fontColor", fontColor);
-
-        return "edit-template";
+    @GetMapping("/shared/style")
+    public String getChangeFont(){
+        return "error";
     }
 
 
