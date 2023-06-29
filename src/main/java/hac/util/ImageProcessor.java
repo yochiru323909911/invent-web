@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.stream.Stream;
 
+/**
+ * The component initialize the images in the database
+ */
 @Component
 public class ImageProcessor {
 
@@ -17,6 +20,7 @@ public class ImageProcessor {
     @Autowired
     private ImageRepository imageRepository;
 
+    /** Save the images in the db **/
     public void saveImageFileNamesToRepository() {
         try {
             // Get the absolute folder path
@@ -34,6 +38,10 @@ public class ImageProcessor {
         }
     }
 
+    /**
+     * Save images paths in the repository according to the category folder
+     * @param categoryFolder the folder of the images that show which category they are
+     */
     private void processCategoryFolder(Path categoryFolder) {
         String category = categoryFolder.getFileName().toString();
 

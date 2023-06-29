@@ -2,6 +2,7 @@ package hac.repo.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -12,9 +13,11 @@ public class Image implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @NotEmpty
     private String path;
 
+    @NotNull
     @NotEmpty
     private String category;
     public Long getId() {

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
-<body th:style="'background-color: #ffffcc;'">
+<body th:style="'background-color: #c9ffff;'">
 <div th:replace="navbar.html :: header"></div>
 <div class="container">
     <div class="row my-3" th:classappend="justify-content-end">
@@ -53,7 +53,7 @@
             </form>
             <div class="row">
             <div class="card col-5 me-4 shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="width: 18rem;">
-                <img src="/images/user.JPG" class="card-img-top img-fluid" alt="...">
+                <img th:src="@{/images/user.JPG}" class="card-img-top img-fluid" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">User statistics</h5>
                     <p class="card-text fst-italic">See who is the popular user.</p>
@@ -61,7 +61,7 @@
                 </div>
             </div>
                 <div class="card col-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded" style="width: 18rem;">
-                    <img src="/images/user.JPG" class="card-img-top img-fluid" alt="user image">
+                    <img th:src="@{/images/favorite-statistics.jpg}" class="card-img-top img-fluid" alt="user image">
                 <div class="card-body">
                     <h5 class="card-title">Design statistics</h5>
                     <p class="card-text fst-italic">See what is the favorite design of the users.</p>

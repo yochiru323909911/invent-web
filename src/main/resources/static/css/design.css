@@ -1,0 +1,25 @@
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text-input {
+    display: block;
+    width: 100%;
+    resize: vertical;
+    border: none;
+    padding: 2px;
+}

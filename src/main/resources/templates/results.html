@@ -1,57 +1,26 @@
-<div th:fragment="show-designs">
-    <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-        <style>
-            .image-container {
-                position: relative;
-                display: inline-block;
-            }
-
-            .image-container img {
-                display: block;
-                width: 100%;
-                height: auto;
-            }
-
-            .text-overlay {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            .text-input {
-                display: block;
-                width: 100%;
-                resize: vertical;
-                border: none;
-                padding: 2px;
-                font-size: 7px;
-            }
-        </style>
-    </head>
-    <body th:style="'background-color: #c9ffff;'">
-    <div th:replace="navbar.html :: header"></div>
-    <div class="row">
-        <h2 class="col-8">Results</h2>
-    </div>
-    <div class="image-container" >
-        <div class="row" th:classappend="align-items-center">
-            <div class="col-3 ms-3 me-3 g-2" th:each="design: ${designs}">
-                <div class="card shadow-lg p-3 mb-1 bg-body-tertiary rounded" >
-                    <img class="image" th:src="@{${design.getImgDesign().getPath()}}" th:alt="${design.getImgDesign().getPath()}">
-                    <div class="text-overlay">
-                        <div class="text-input" th:style="'white-space: pre-line;'" th:text="${design.freeText}"></div>
-                    </div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/design.css}">
+</head>
+<body th:style="'background-color: #c9ffff;'">
+<div th:replace="navbar.html :: header"></div>
+<div class="row"><h2 class="col-8 fst-italic">Results</h2></div>
+<div class="image-container" >
+    <div class="row" th:classappend="align-items-center">
+        <div class="col-3 ms-3 me-3 g-2" th:each="design: ${designs}">
+            <div class="card shadow-lg p-3 mb-1 bg-body-tertiary rounded" >
+                <img class="image" th:src="@{${design.getImgDesign().getPath()}}" th:alt="${design.getImgDesign().getPath()}">
+                <div class="text-overlay">
+                    <div class="text-input" th:style="'white-space: pre-line; 12px'" th:text="${design.freeText}"></div>
                 </div>
             </div>
         </div>
     </div>
-    </body>
-    </html>
-    </html>
 </div>
+</body>
+</html>
+</html>
