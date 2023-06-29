@@ -49,7 +49,7 @@
 
             <img class="image" th:src="@{${imgDesign}}" th:alt="Image">
             <div class="text-overlay">
-                <textarea class="text-input" rows="5" placeholder="Enter text here" name="freeText" th:text="${text}"></textarea>
+                <textarea class="text-input" rows="10" placeholder="Enter text here" name="freeText" th:text="${text}"></textarea>
             </div>
             <input type="hidden" name="owner" th:value="none"> <!-- This is the line that is causing the error -->
             <input type="hidden" name="imgDesign" th:value="${imgDesign}" />  <!-- This is the line that is causing the error -->

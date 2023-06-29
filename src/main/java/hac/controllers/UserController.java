@@ -181,12 +181,12 @@ public class UserController {
         return "user/my-account";
     }
 
-    @PostMapping("/shared/delete-contact/{id}")
-    public String postDeleteContact(@PathVariable String id){
+    @PostMapping("/shared/delete-contact")
+    public String postDeleteContact(@RequestParam String id){
         return "error";
     }
-    @GetMapping("/shared/delete-contact/{id}")
-    public String deleteContact(@PathVariable("id") Long contactId, Model model) {
+    @GetMapping("/shared/delete-contact")
+    public String deleteContact(@RequestParam("deleteId") Long contactId, Model model) {
         contactRepository.deleteById(contactId);
         update(model);
         model.addAttribute("successContact", "Contact deleted successfully");
@@ -194,12 +194,24 @@ public class UserController {
         return "user/my-account";
     }
 
-    @PostMapping("/shared/delete-design/{id}")
-    public String postDeleteDesign(@PathVariable String id){
+//    @PostMapping("/shared/edit-contact")
+//    public String postEditContact(@RequestParam String editId){
+//        return "error";
+//    }
+//    @GetMapping("/shared/edit-contact")
+//    public String editContact(@RequestParam("editId") Long contactId, Model model) {
+//        System.out.println("in edit contact");
+//        Contact contact = contactRepository.findById(contactId).get();
+//        update(model);
+//        return "user/my-account";
+//    }
+
+    @PostMapping("/shared/delete-design")
+    public String postDeleteDesign(@RequestParam("deleteId") String id){
         return "error";
     }
-    @GetMapping("/shared/delete-design/{id}")
-    public String deleteDesign(@PathVariable("id") Long designId, Model model) {
+    @GetMapping("/shared/delete-design")
+    public String deleteDesign(@RequestParam("deleteId") Long designId, Model model) {
         designRepository.deleteById(designId);
         update(model);
         model.addAttribute("successDesign", "Design deleted successfully");
@@ -208,7 +220,7 @@ public class UserController {
     }
 
     @GetMapping("/shared/edit-design")
-    public String editDesign(@RequestParam("designId") Long designId, Model model) {
+    public String editDesign(@RequestParam("editId") Long designId, Model model) {
         Design design = designRepository.findById(designId).get();
         model.addAttribute("imgDesign", design.getImgDesign().getPath());
         model.addAttribute("text", design.getFreeText());

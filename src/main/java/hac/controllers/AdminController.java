@@ -48,7 +48,7 @@ public class AdminController {
             model.addAttribute("error", "Invalid date input: required YYYY-MM-DD.");
             return "admin/admin";
         }
-        model.addAttribute("designsResults", designsResults);
+        model.addAttribute("designs", designsResults);
         return "results";
     }
 

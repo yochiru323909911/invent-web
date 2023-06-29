@@ -34,24 +34,25 @@
             }
         </style>
     </head>
-    <body th:style="'background-color: #c9ffff;'">
-    <div th:replace="navbar.html :: header"></div>
+    <body>
     <div class="row">
-        <h2 class="col-8">Results</h2>
+        <h2 class="col-8">My Contacts</h2>
     </div>
-    <div class="image-container" >
-        <div class="row" th:classappend="align-items-center">
-            <div class="col-3 ms-3 me-3 g-2" th:each="design: ${designs}">
-                <div class="card shadow-lg p-3 mb-1 bg-body-tertiary rounded" >
-                    <img class="image" th:src="@{${design.getImgDesign().getPath()}}" th:alt="${design.getImgDesign().getPath()}">
-                    <div class="text-overlay">
-                        <div class="text-input" th:style="'white-space: pre-line;'" th:text="${design.freeText}"></div>
-                    </div>
+        <div class="image-container" >
+            <div class="row" th:classappend="align-items-center">
+                <div class="col-5 ms-3 me-3 g-2" th:each="design: ${designs}">
+            <div class="card shadow-lg p-3 mb-1 bg-body-tertiary rounded" >
+            <img class="image" th:src="@{${design.getImgDesign().getPath()}}" th:alt="${design.getImgDesign().getPath()}">
+            <div class="text-overlay">
+                <div class="text-input" th:style="'white-space: pre-line;'" th:text="${design.freeText}"></div>
+            </div>
+            </div>
+                    <div th:replace="~{user/edit-and-delete.html :: edit-and-delete(deleteUrl='/shared/delete-design', editUrl='/shared/edit-design', id=${design.getId()})}"></div>
                 </div>
             </div>
         </div>
-    </div>
     </body>
     </html>
     </html>
 </div>
+
